@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC, useState } from "react";
+import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
+import Header from "./components/Header";
+import { HeaderActiveItem } from "./types";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { Container } from "@material-ui/core";
 
-function App() {
+import "./App.css";
+
+// TODO: finish theme
+const theme = createMuiTheme({});
+
+const App: FC = () => {
+  const [headerActiveItem, setHeaderActiveItem] = useState<HeaderActiveItem>(HeaderActiveItem.Set);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Redirect to={isLoggedIn ? "/" : "/login/"} />
+
+        <Header active={headerActiveItem} />
+
+        <main className="App">
+          <Container maxWidth="md">
+            <Switch>{<>{/* <Route path="/" exact component={Sets} />
+                  <Route path="/my-cards" component={MyCards} />
+                  <Route path="/wishlist" component={Wishlist} />
+                  <Route path="/logout" component={Login} />
+                  <Route component={Notfound} /> */}</>}</Switch>
+          </Container>
+        </main>
+      </Router>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
