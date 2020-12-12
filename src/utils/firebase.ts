@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import { useEffect, useState } from 'react';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAWLOG84nIGru7qGg5flGDv8Wn0zHIgzNo",
@@ -12,9 +13,20 @@ const firebaseConfig = {
   };
 
   firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
 
   export const auth = firebase.auth();
-  const googleProvider = new firebase.auth.GoogleAuthProvider()
+  const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+  type User = Pick<firebase.User, 'uid' | 'email'>;
+
+  export type WishlistCard = {
+    by: User;
+  }
+
+  export const wishlistCollection = db.collection('wishlist') as firebase.firestore.CollectionReference<WishlistCard>;
+
+
   export const googleLogin = () => {
     auth.signInWithPopup(googleProvider).then((res) => {
       console.log(res.user)
@@ -22,3 +34,13 @@ const firebaseConfig = {
       console.log(error.message)
     })
   }
+
+  export const useLoggedInUser = () => {
+  const [user, setUser] = useState<firebase.User | null>();
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(u => setUser(u));
+  }, []);
+
+  return user;
+};

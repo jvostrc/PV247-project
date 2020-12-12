@@ -7,6 +7,7 @@ import { Container } from "@material-ui/core";
 
 import "./App.css";
 import Login from "./pages/login";
+import Wishlist from "./pages/wishlist";
 
 // TODO: finish theme
 const theme = createMuiTheme({});
@@ -26,11 +27,14 @@ const App: FC = () => {
         <main className="App">
           <Container maxWidth="md">
             <Switch>
-              <Route path="/" component={Login} />{  
+              <Route path="/" component={Login} />
+              <Route path='/wishlist' exact component={Wishlist} />
+              {  
               <>{/* <Route path="/" exact component={Sets} />
                   <Route path="/my-cards" component={MyCards} />
                   <Route path="/wishlist" component={Wishlist} />
-                  <Route component={Notfound} /> */}</>}</Switch>
+                  <Route component={Notfound} /> */}</>}
+            </Switch>
           </Container>
         </main>
       </Router>
