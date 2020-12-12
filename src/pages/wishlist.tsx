@@ -3,42 +3,37 @@ import { FC } from "react";
 import { useLoggedInUser, wishlistCollection } from "../utils/firebase";
 
 const Wishlist: FC = () => {
+  const user = useLoggedInUser();
 
-const user = useLoggedInUser();
-
-const submitWishlistCard = async () => {
+  const submitWishlistCard = async () => {
     try {
       await wishlistCollection.doc(user?.uid).set({
         by: {
-          uid: user?.uid ?? '',
-          email: user?.email ?? '',
-        },
+          uid: user?.uid ?? "",
+          email: user?.email ?? ""
+        }
       });
+    } catch (error) {
+      console.log(error);
     }
-    catch (error) {
-        console.log(error);
-      }
-};
-
+  };
 
   return (
-        <Grid container direction="column" alignItems="center" justify="center">
-          <Grid item xs={12} sm={6} md={3}>
-            <Card>
-              <CardContent>
-                <Typography>
-                  Pokemon Card Collection Tracker
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button onClick={submitWishlistCard}>
-                    Wishlist Submit
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
-        </Grid>
+    <Grid container direction="column" alignItems="center" justify="center">
+      <Grid item xs={12} sm={6} md={3}>
+        <Card>
+          <CardContent>
+            <Typography color="secondary">Pokemon Card Collection Tracker</Typography>
+          </CardContent>
+          <CardActions>
+            <Button onClick={submitWishlistCard} color="secondary">
+              Wishlist Submit
+            </Button>
+          </CardActions>
+        </Card>
+      </Grid>
+    </Grid>
   );
 };
 
-export default Wishlist
+export default Wishlist;

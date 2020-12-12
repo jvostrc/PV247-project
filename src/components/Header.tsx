@@ -10,7 +10,7 @@ import LogoutIcon from "../icons/logout.svg";
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
-    backgroundColor: "#2A364A",
+    backgroundColor: theme.palette.secondary.main,
     boxShadow: "0px 7px 8px 0px rgba(0,0,0,0.4)"
   },
   link: {
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     opacity: "70%",
     transition: "0.1s",
     "&:hover": {
-      backgroundColor: "#212d42"
+      backgroundColor: theme.palette.action.hover
     },
     [theme.breakpoints.down("xs")]: {
       width: "25%"
@@ -29,18 +29,18 @@ const useStyles = makeStyles((theme: Theme) => ({
   button: {
     height: "100%",
     width: "90px",
-    color: "white",
-    fontWeight: 400,
-    lineHeight: "1em",
-    textTransform: "none",
+    color: theme.palette.text.primary,
     paddingTop: "35px",
     backgroundPosition: "center top 13px",
     backgroundRepeat: "no-repeat",
+    "&:hover": {
+      backgroundColor: theme.palette.action.hover
+    },
     [theme.breakpoints.down("xs")]: {
       width: "100%"
     }
   },
-  active: { borderBottomColor: "#FFFFFF", opacity: "100%" },
+  active: { borderBottomColor: "#FFF", opacity: "100%" },
   sets: { backgroundImage: `url(${SetsIcon})` },
   myCards: { backgroundImage: `url(${CardsIcon})` },
   wishlist: { backgroundImage: `url(${WishlistIcon})` },
