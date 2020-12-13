@@ -51,3 +51,5 @@ const firebaseConfig = {
 
   return user;
 };
+
+export const logout = () => firebase.auth().signOut(); console.log("User Signed Out!")

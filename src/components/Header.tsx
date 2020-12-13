@@ -7,6 +7,8 @@ import SetsIcon from "../icons/sets.svg";
 import CardsIcon from "../icons/cards.svg";
 import WishlistIcon from "../icons/star.svg";
 import LogoutIcon from "../icons/logout.svg";
+import { logout, useLoggedInUser } from "../utils/firebase";
+
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -54,22 +56,27 @@ type HeaderProps = {
 
 const Header: FC<HeaderProps> = ({ active }) => {
   const classes = useStyles();
+  const user = useLoggedInUser();
 
   return (
     <AppBar position="sticky" className={classes.appBar}>
       <Toolbar>
-        <Link to="/sets" className={`${classes.link} ${active === HeaderActiveItem.Set ? classes.active : ""}`}>
-          <Button className={`${classes.button} ${classes.sets}`}>Sets</Button>
-        </Link>
-        <Link to="/my-cards" className={`${classes.link} ${active === HeaderActiveItem.MyCards ? classes.active : ""}`}>
-          <Button className={`${classes.button} ${classes.myCards}`}>My Cards</Button>
-        </Link>
-        <Link to="/wishlist" className={`${classes.link} ${active === HeaderActiveItem.Wishlist ? classes.active : ""}`}>
-          <Button className={`${classes.button} ${classes.wishlist}`}>Wishlist</Button>
-        </Link>
-        <Link to="/logout" className={`${classes.link} ${classes.logoutLink}`}>
-          <Button className={`${classes.button} ${classes.logout}`}>Logout</Button>
-        </Link>
+        {user && (
+          <>
+            <Link to="/sets" className={`${classes.link} ${active === HeaderActiveItem.Set ? classes.active : ""}`}>
+              <Button className={`${classes.button} ${classes.sets}`}>Sets</Button>
+            </Link> 
+            <Link to="/my-cards" className={`${classes.link} ${active === HeaderActiveItem.MyCards ? classes.active : ""}`}>
+              <Button className={`${classes.button} ${classes.myCards}`}>My Cards</Button>
+            </Link>
+            <Link to="/wishlist" className={`${classes.link} ${active === HeaderActiveItem.Wishlist ? classes.active : ""}`}>
+              <Button className={`${classes.button} ${classes.wishlist}`}>Wishlist</Button>
+            </Link>
+            <Link to="/logout" className={`${classes.link} ${classes.logoutLink}`}>
+              <Button className={`${classes.button} ${classes.logout}`} onClick={logout}>Logout</Button>
+            </Link>
+          </>
+        )}
       </Toolbar>
     </AppBar>
   );
