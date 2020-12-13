@@ -8,6 +8,7 @@ import { Container } from "@material-ui/core";
 import "./App.css";
 import Login from "./pages/login";
 import Wishlist from "./pages/wishlist";
+import Sets from "./pages/sets";
 
 const theme = createMuiTheme({
   palette: {
@@ -49,6 +50,7 @@ const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <Router>
+
         <Redirect to={isLoggedIn ? "/" : "/login/"} />
 
         <Header active={headerActiveItem} />
@@ -60,7 +62,6 @@ const App: FC = () => {
                 path="/"
                 exact
                 render={() => {
-                  setHeaderActiveItem(HeaderActiveItem.Set);
                   return <Login />;
                 }}
               />
@@ -76,6 +77,13 @@ const App: FC = () => {
                 render={() => {
                   setHeaderActiveItem(HeaderActiveItem.Wishlist);
                   return <Wishlist />;
+                }}
+              />
+              <Route
+                path="/sets"
+                render={() => {
+                  setHeaderActiveItem(HeaderActiveItem.Set);
+                  return <Sets />;
                 }}
               />
               {<>{/* <Route component={Notfound} /> */}</>}

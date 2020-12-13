@@ -58,7 +58,7 @@ const Header: FC<HeaderProps> = ({ active }) => {
   return (
     <AppBar position="sticky" className={classes.appBar}>
       <Toolbar>
-        <Link to="/" className={`${classes.link} ${active === HeaderActiveItem.Set ? classes.active : ""}`}>
+        <Link to="/sets" className={`${classes.link} ${active === HeaderActiveItem.Set ? classes.active : ""}`}>
           <Button className={`${classes.button} ${classes.sets}`}>Sets</Button>
         </Link>
         <Link to="/my-cards" className={`${classes.link} ${active === HeaderActiveItem.MyCards ? classes.active : ""}`}>
