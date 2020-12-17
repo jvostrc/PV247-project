@@ -89,7 +89,7 @@ const App: FC = () => {
                   return <SetGrid />;
                 }}
               />
-              <Route path="/sets/base1" render={() => <CardGrid setCode="base1"></CardGrid>} />
+              <Route path="/sets/:setCode" render={({match}) => <CardGrid setCode={match.params.setCode}/>} />
               <Route path="/swsh4-177" render={() => <PkmnDetail id="swsh4-177"></PkmnDetail>} />
               {<>{/* <Route component={Notfound} /> */}</>}
             </Switch>
