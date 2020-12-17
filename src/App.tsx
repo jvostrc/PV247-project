@@ -52,8 +52,6 @@ const App: FC = () => {
     <ThemeProvider theme={theme}>
       <Router>
 
-        <Redirect to={isLoggedIn ? "/" : "/login/"} />
-
         <Header active={headerActiveItem} />
 
         <main className="App">

@@ -5,15 +5,15 @@ import pokeball from "../icons/pokeball.svg";
 import { Redirect } from "react-router-dom";
 
 const Login: FC = () => {
-  /*{ redirection of already authorized user
+  
 
   const isLoggedIn = useLoggedInUser();
 
   if (isLoggedIn) {
-    return <Redirect to='/' />;
+    return <Redirect to='/sets' />;
   }
 
-}*/
+
 
   return (
     <Grid container direction="column" alignItems="center" justify="center">
