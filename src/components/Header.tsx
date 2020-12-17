@@ -7,10 +7,12 @@ import SetsIcon from "../icons/sets.svg";
 import CardsIcon from "../icons/cards.svg";
 import WishlistIcon from "../icons/star.svg";
 import LogoutIcon from "../icons/logout.svg";
+import { logout, useLoggedInUser } from "../utils/firebase";
+
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
-    backgroundColor: "#2A364A",
+    backgroundColor: theme.palette.secondary.main,
     boxShadow: "0px 7px 8px 0px rgba(0,0,0,0.4)"
   },
   link: {
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     opacity: "70%",
     transition: "0.1s",
     "&:hover": {
-      backgroundColor: "#212d42"
+      backgroundColor: theme.palette.action.hover
     },
     [theme.breakpoints.down("xs")]: {
       width: "25%"
@@ -29,18 +31,18 @@ const useStyles = makeStyles((theme: Theme) => ({
   button: {
     height: "100%",
     width: "90px",
-    color: "white",
-    fontWeight: 400,
-    lineHeight: "1em",
-    textTransform: "none",
+    color: theme.palette.text.primary,
     paddingTop: "35px",
     backgroundPosition: "center top 13px",
     backgroundRepeat: "no-repeat",
+    "&:hover": {
+      backgroundColor: theme.palette.action.hover
+    },
     [theme.breakpoints.down("xs")]: {
       width: "100%"
     }
   },
-  active: { borderBottomColor: "#FFFFFF", opacity: "100%" },
+  active: { borderBottomColor: "#FFF", opacity: "100%" },
   sets: { backgroundImage: `url(${SetsIcon})` },
   myCards: { backgroundImage: `url(${CardsIcon})` },
   wishlist: { backgroundImage: `url(${WishlistIcon})` },
@@ -54,22 +56,27 @@ type HeaderProps = {
 
 const Header: FC<HeaderProps> = ({ active }) => {
   const classes = useStyles();
+  const user = useLoggedInUser();
 
   return (
     <AppBar position="sticky" className={classes.appBar}>
       <Toolbar>
-        <Link to="/" className={`${classes.link} ${active === HeaderActiveItem.Set ? classes.active : ""}`}>
-          <Button className={`${classes.button} ${classes.sets}`}>Sets</Button>
-        </Link>
-        <Link to="/my-cards" className={`${classes.link} ${active === HeaderActiveItem.MyCards ? classes.active : ""}`}>
-          <Button className={`${classes.button} ${classes.myCards}`}>My Cards</Button>
-        </Link>
-        <Link to="/wishlist" className={`${classes.link} ${active === HeaderActiveItem.Wishlist ? classes.active : ""}`}>
-          <Button className={`${classes.button} ${classes.wishlist}`}>Wishlist</Button>
-        </Link>
-        <Link to="/logout" className={`${classes.link} ${classes.logoutLink}`}>
-          <Button className={`${classes.button} ${classes.logout}`}>Logout</Button>
-        </Link>
+        {user && (
+          <>
+            <Link to="/sets" className={`${classes.link} ${active === HeaderActiveItem.Set ? classes.active : ""}`}>
+              <Button className={`${classes.button} ${classes.sets}`}>Sets</Button>
+            </Link> 
+            <Link to="/my-cards" className={`${classes.link} ${active === HeaderActiveItem.MyCards ? classes.active : ""}`}>
+              <Button className={`${classes.button} ${classes.myCards}`}>My Cards</Button>
+            </Link>
+            <Link to="/wishlist" className={`${classes.link} ${active === HeaderActiveItem.Wishlist ? classes.active : ""}`}>
+              <Button className={`${classes.button} ${classes.wishlist}`}>Wishlist</Button>
+            </Link>
+            <Link to="/logout" className={`${classes.link} ${classes.logoutLink}`}>
+              <Button className={`${classes.button} ${classes.logout}`} onClick={logout}>Logout</Button>
+            </Link>
+          </>
+        )}
       </Toolbar>
     </AppBar>
   );
