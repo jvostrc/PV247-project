@@ -8,6 +8,7 @@ import { Container, makeStyles, Theme } from "@material-ui/core";
 import "./App.css";
 import SetGrid from "./components/SetGrid";
 import CardGrid from "./components/CardGrid";
+import PkmnDetail from "./components/PkmnDetail";
 import Login from "./pages/login";
 import Wishlist from "./pages/wishlist";
 import Sets from "./pages/sets";
@@ -51,7 +52,6 @@ const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-
         <Redirect to={isLoggedIn ? "/" : "/login/"} />
 
         <Header active={headerActiveItem} />
@@ -88,7 +88,8 @@ const App: FC = () => {
                   return <SetGrid />;
                 }}
               />
-              <Route path="/sets/base1" render={() => <CardGrid setCode="base1"></CardGrid>}/>
+              <Route path="/sets/base1" render={() => <CardGrid setCode="base1"></CardGrid>} />
+              <Route path="/swsh4-177" render={() => <PkmnDetail id="swsh4-177"></PkmnDetail>} />
               {<>{/* <Route component={Notfound} /> */}</>}
             </Switch>
           </Container>

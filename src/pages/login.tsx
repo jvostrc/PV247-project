@@ -1,7 +1,7 @@
 import { Button, Card, CardActions, CardContent, Grid, Typography } from "@material-ui/core";
 import { FC } from "react";
 import { googleLogin, useLoggedInUser } from "../utils/firebase";
-import pokeball from "../icons/pokeball.svg";
+import pokeball from "../icons/filled-pokeball.svg";
 import { Redirect } from "react-router-dom";
 
 const Login: FC = () => {

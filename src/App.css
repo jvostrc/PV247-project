@@ -1,6 +1,7 @@
 .App {
   background-color: #374761;
   color: white;
+  padding-top: 20px;
   min-height: calc(100vh - 66px);
   text-align: center;
   display: flex;
