@@ -49,10 +49,10 @@ const Set: FC<SetProps> = ({set}) => {
                             <img src={set.logoUrl} className={classes.logo}></img>
                         </div>
                         <img src={set.symbolUrl} className={classes.symbol}></img>
-                        <Typography gutterBottom component="h1" variant="subtitle1">
+                        <Typography color="secondary" gutterBottom component="h1" variant="subtitle1">
                             <b>{set.name}</b>
                         </Typography>
-                        <Typography gutterBottom component="h2" variant="subtitle1">
+                        <Typography color="secondary" gutterBottom component="h2" variant="subtitle1">
                             0/{set.totalCards}
                         </Typography>
                     </CardContent>    

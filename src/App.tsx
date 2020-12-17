@@ -3,17 +3,14 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-d
 import Header from "./components/Header";
 import { HeaderActiveItem } from "./types";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { Card, Container, makeStyles, Theme } from "@material-ui/core";
+import { Container, makeStyles, Theme } from "@material-ui/core";
 
 import "./App.css";
-<<<<<<< HEAD
 import SetGrid from "./components/SetGrid";
 import CardGrid from "./components/CardGrid";
-=======
 import Login from "./pages/login";
 import Wishlist from "./pages/wishlist";
 import Sets from "./pages/sets";
->>>>>>> ca753546a6d97123ebca90fa64a0f5890791f628
 
 const theme = createMuiTheme({
   palette: {
@@ -60,19 +57,7 @@ const App: FC = () => {
         <Header active={headerActiveItem} />
 
         <main className="App">
-<<<<<<< HEAD
           <Container>
-              <Switch>
-                  <Route path="/" exact component={SetGrid} />
-                  <Route path="/sets" render={() => <CardGrid setCode="base1"></CardGrid>}/>{
-                  /*
-                    <Route path="/my-cards" component={MyCards} />
-                    <Route path="/wishlist" component={Wishlist} />
-                    <Route path="/logout" component={Login} />
-                    <Route component={Notfound} /> */}
-              </Switch>
-=======
-          <Container maxWidth="md">
             <Switch>
               <Route
                 path="/"
@@ -97,14 +82,15 @@ const App: FC = () => {
               />
               <Route
                 path="/sets"
+                exact
                 render={() => {
                   setHeaderActiveItem(HeaderActiveItem.Set);
-                  return <Sets />;
+                  return <SetGrid />;
                 }}
               />
+              <Route path="/sets/base1" render={() => <CardGrid setCode="base1"></CardGrid>}/>
               {<>{/* <Route component={Notfound} /> */}</>}
             </Switch>
->>>>>>> ca753546a6d97123ebca90fa64a0f5890791f628
           </Container>
         </main>
       </Router>

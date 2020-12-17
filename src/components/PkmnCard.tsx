@@ -25,8 +25,8 @@ const Set: FC<CardProps> = ({card}) => {
             </CardActionArea>
                 {/*Change to Icons hearth and star*/}
                 <CardContent>
-                    <Button>Add to My Collection</Button>
-                    <Button>Add to Wishlist</Button>
+                    <Button color="primary">Add to My Collection</Button>
+                    <Button color="primary">Add to Wishlist</Button>
                 </CardContent>              
         </Card>
     );
