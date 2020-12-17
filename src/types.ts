@@ -7,6 +7,13 @@ export type IPkmnSet = {
   totalCards: number;
 };
 
+// Type of each Pokemon Card
+export type IPkmnCard = {
+  id: string;
+  number: number;
+  imageUrl: string;
+}
+
 export enum HeaderActiveItem {
   Set,
   MyCards,

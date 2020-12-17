@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import {makeStyles, Theme} from '@material-ui/core/styles';
-// TODO add react-router-dom
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Card, CardActionArea, CardContent, Typography } from "@material-ui/core";
 import { IPkmnSet } from "../types";
 
@@ -11,7 +10,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginRight: "5%",
         marginTop: "5%",
         marginBottom: "5%",
-        padding: "2%"
+        marginLeft: "5%",
+        padding: "2%",
+        textAlign: "center",
     },
     logoContainer: {
         margin: 5,
@@ -40,8 +41,7 @@ const Set: FC<SetProps> = ({set}) => {
     const classes = useStyles();
 
     return (
-       // TODO - add react-router-dom
-       // <Link className={classes.link} to={`/sets/${set.code}`}>
+        <Link className={classes.link} to={`/sets/${set.code}`}>
             <Card className={classes.card}>
                 <CardActionArea>
                     <CardContent>
@@ -58,7 +58,7 @@ const Set: FC<SetProps> = ({set}) => {
                     </CardContent>    
                 </CardActionArea>           
             </Card>
-      //  </Link>
+        </Link>
     );
 };
 
