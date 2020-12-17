@@ -4,13 +4,13 @@ import Header from "./components/Header";
 import { HeaderActiveItem } from "./types";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { Container, makeStyles, Theme } from "@material-ui/core";
-
 import "./App.css";
 import SetGrid from "./components/SetGrid";
 import CardGrid from "./components/CardGrid";
 import Login from "./pages/login";
 import Wishlist from "./pages/wishlist";
 import Sets from "./pages/sets";
+import { useLoggedInUser } from "./utils/firebase";
 
 const theme = createMuiTheme({
   palette: {
@@ -46,11 +46,13 @@ const theme = createMuiTheme({
 
 const App: FC = () => {
   const [headerActiveItem, setHeaderActiveItem] = useState<HeaderActiveItem>(HeaderActiveItem.Set);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const isLoggedIn = useLoggedInUser();
 
   return (
     <ThemeProvider theme={theme}>
       <Router>
+
+        <Redirect to={isLoggedIn ? "/sets" : "/"} />
 
         <Header active={headerActiveItem} />
 

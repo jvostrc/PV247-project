@@ -1,19 +1,9 @@
 import { Button, Card, CardActions, CardContent, Grid, Typography } from "@material-ui/core";
 import { FC } from "react";
-import { googleLogin, useLoggedInUser } from "../utils/firebase";
+import { googleLogin } from "../utils/firebase";
 import pokeball from "../icons/pokeball.svg";
-import { Redirect } from "react-router-dom";
 
 const Login: FC = () => {
-  
-
-  const isLoggedIn = useLoggedInUser();
-
-  if (isLoggedIn) {
-    return <Redirect to='/sets' />;
-  }
-
-
 
   return (
     <Grid container direction="column" alignItems="center" justify="center">
