@@ -1,16 +1,13 @@
-import { IconButton, Card, CardActionArea, CardContent, Avatar, makeStyles, Theme, Typography, Grid } from "@material-ui/core";
+import { IconButton, makeStyles, Theme, Typography, Grid } from "@material-ui/core";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { IPkmnDetail } from "../types";
 import { useHistory } from "react-router-dom";
 
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import StarIcon from "@material-ui/icons/Star";
-import AddIcon from "@material-ui/icons/Add";
-
-// import Star from "../icons/star.svg";
-// import FilledStar from "../icons/filled-star.svg";
-// import Pokeball from "../icons/pokeball.svg";
-// import FilledPokeball from "../icons/filled-pokeball.svg";
+import star from "../icons/star.svg";
+import filledStar from "../icons/filled-star.svg";
+import pokeball from "../icons/pokeball.svg";
+import filledPokeball from "../icons/filled-pokeball.svg";
 
 const getData = async (id: string): Promise<IPkmnDetail> => {
   const response = await fetch(`https://api.pokemontcg.io/v1/cards/${id}`);
@@ -48,7 +45,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     borderRight: `1px solid ${theme.palette.secondary.main}`
   },
   img: {
-    maxWidth: 240
+    borderRadius: 4,
+    backgroundColor: theme.palette.secondary.main
   },
   subtitle: {
     color: "#A9AEB6"
@@ -64,6 +62,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 const PkmnDetail: FC<DetailProps> = ({ id }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<IPkmnDetail>();
+
+  const [wishlisted, setWishlisted] = useState(false);
+  const [collected, setCollected] = useState(false);
+
   const classes = useStyles();
   const history = useHistory();
 
@@ -86,7 +88,7 @@ const PkmnDetail: FC<DetailProps> = ({ id }) => {
   }
 
   return (
-    <Grid container lg={8} md={8} sm={10} xs={12} className={classes.container}>
+    <Grid container item lg={8} md={8} sm={10} xs={12} className={classes.container}>
       <Grid item container direction="row" justify="space-between" alignItems="center" className={classes.marginBottom}>
         <div className={classes.row}>
           <IconButton
@@ -102,26 +104,26 @@ const PkmnDetail: FC<DetailProps> = ({ id }) => {
           </Typography>
         </div>
         <div>
-          <IconButton color="inherit">
-            <StarIcon />
+          <IconButton color="inherit" onClick={() => setWishlisted(!wishlisted)}>
+            {wishlisted ? <img src={filledStar} alt="Remove from Wishlist" width="23px" height="23px" /> : <img src={star} alt="Add to Wishlist" width="23px" height="23px" />}
           </IconButton>
-          <IconButton color="inherit">
-            <AddIcon />
+          <IconButton color="inherit" onClick={() => setCollected(!collected)}>
+            {collected ? <img src={filledPokeball} alt="Remove from My Cards" width="23px" height="23px" /> : <img src={pokeball} alt="Add to My Cards" width="23px" height="23px" />}
           </IconButton>
         </div>
       </Grid>
 
       <Grid item container lg={6} md={6} sm={6} xs={12} className={classes.gridImg}>
-        <img src={data?.card.imageUrl} alt={data?.card.name} width="240px" height="330px" />
+        <img src={data?.card.imageUrl} alt={data?.card.name} width="240px" height="330px" className={classes.img} />
       </Grid>
 
-      <Grid item container lg={6} md={6} sm={6} xs={12} alignItems="center" justify="center" spacing={0}>
+      <Grid item container lg={6} md={6} sm={6} xs={12} alignItems="center" justify="center">
         <Grid item md={6} sm={6} xs={6} className={`${classes.borderBottom} ${classes.borderRight} ${classes.paddingVertical}`}>
           <Typography variant="body1" className={classes.subtitle} gutterBottom>
             Card Type
           </Typography>
           <Typography variant="body1" className={classes.text}>
-            {data?.card?.subtype ?? "N/A"}
+            {data?.card.subtype ? data?.card.subtype : "N/A"}
           </Typography>
         </Grid>
         <Grid item md={6} sm={6} xs={6} className={`${classes.borderBottom} ${classes.paddingVertical}`}>
@@ -137,7 +139,7 @@ const PkmnDetail: FC<DetailProps> = ({ id }) => {
             Type
           </Typography>
           <Typography variant="body1" className={classes.text}>
-            {data?.card?.types ? [0] ?? "N/A" : "N/A"}
+            {data?.card?.types ? data?.card?.types[0] : "N/A"}
           </Typography>
         </Grid>
         <Grid item md={6} sm={6} xs={6} className={`${classes.borderBottom} ${classes.paddingVertical}`}>

@@ -45,9 +45,9 @@ const Set: FC<SetProps> = ({ set }) => {
         <CardActionArea>
           <CardContent>
             <div className={classes.logoContainer}>
-              <img src={set.logoUrl} className={classes.logo} alt={set.name}></img>
+              <img src={set.logoUrl} className={classes.logo} alt={set.name} height="110px" />
             </div>
-            <img src={set.symbolUrl} className={classes.symbol} alt=""></img>
+            <img src={set.symbolUrl} className={classes.symbol} alt="" height="25px" />
             <Typography color="secondary" gutterBottom component="h1" variant="subtitle1">
               <b>{set.name}</b>
             </Typography>
