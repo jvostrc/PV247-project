@@ -52,7 +52,6 @@ const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-
         <Redirect to={isLoggedIn ? "/sets" : "/"} />
 
         <Header active={headerActiveItem} />
@@ -89,8 +88,8 @@ const App: FC = () => {
                   return <SetGrid />;
                 }}
               />
-              <Route path="/sets/:setCode" render={({match}) => <CardGrid setCode={match.params.setCode}/>} />
-              <Route path="/swsh4-177" render={() => <PkmnDetail id="swsh4-177"></PkmnDetail>} />
+              <Route path="/sets/:setCode" render={({ match }) => <CardGrid setCode={match.params.setCode} />} />
+              <Route path="/:cardId" render={({ match }) => <PkmnDetail id={match.params.cardId}></PkmnDetail>} />
               {<>{/* <Route component={Notfound} /> */}</>}
             </Switch>
           </Container>

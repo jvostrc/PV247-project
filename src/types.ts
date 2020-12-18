@@ -15,15 +15,17 @@ export type IPkmnCard = {
 };
 
 export type IPkmnDetail = {
-  id: string;
-  name: string;
-  number: number;
-  imageUrl: string;
-  cardType: string;
-  type: string;
-  rarity: string;
-  hp: string;
-  set: string;
+  card: {
+    id: string;
+    name: string;
+    imageUrl: string;
+    types: string[];
+    subtype: string; //Card Type
+    hp: string;
+    number: number;
+    rarity: string;
+    set: string;
+  };
 };
 
 export enum HeaderActiveItem {
