@@ -8,6 +8,8 @@ import star from "../icons/star.svg";
 import filledStar from "../icons/filled-star.svg";
 import pokeball from "../icons/pokeball.svg";
 import filledPokeball from "../icons/filled-pokeball.svg";
+import useDb from "../pages/sets";
+import { cardSetCollection } from "../utils/firebase";
 
 const getData = async (id: string): Promise<IPkmnDetail> => {
   const response = await fetch(`https://api.pokemontcg.io/v1/cards/${id}`);
@@ -68,6 +70,35 @@ const PkmnDetail: FC<DetailProps> = ({ id }) => {
 
   const classes = useStyles();
   const history = useHistory();
+  const { submitWishlistCard, removeWishlistCard, submitMyCard, removeMyCard } = useDb();
+
+  const addToWishlist = () => {
+    if(data){
+      submitWishlistCard(data.card.id, data.card.imageUrl, data.card.number, data.card.set);
+      setWishlisted(!wishlisted);
+    } 
+  }
+
+  const removeFromWishlist = () => {
+    if(data){
+      removeWishlistCard(data.card.id);
+      setWishlisted(!wishlisted);
+    }
+  }
+
+  const addToMyCollection = () => {
+    if(data){
+      submitMyCard(data.card.id, data.card.imageUrl, data.card.number, data.card.set);
+      setCollected(!collected);
+    }
+  }
+
+  const removeFromMyCollection = () => {
+    if(data){
+      removeMyCard(data.card.id);
+      setCollected(!collected);
+    }
+  }
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -104,10 +135,10 @@ const PkmnDetail: FC<DetailProps> = ({ id }) => {
           </Typography>
         </div>
         <div>
-          <IconButton color="inherit" onClick={() => setWishlisted(!wishlisted)}>
+          <IconButton color="inherit" onClick={() => wishlisted ? removeFromWishlist() : addToWishlist()}>
             {wishlisted ? <img src={filledStar} alt="Remove from Wishlist" width="23px" height="23px" /> : <img src={star} alt="Add to Wishlist" width="23px" height="23px" />}
           </IconButton>
-          <IconButton color="inherit" onClick={() => setCollected(!collected)}>
+          <IconButton color="inherit" onClick={() => collected ? removeFromMyCollection() : addToMyCollection()}>
             {collected ? <img src={filledPokeball} alt="Remove from My Cards" width="23px" height="23px" /> : <img src={pokeball} alt="Add to My Cards" width="23px" height="23px" />}
           </IconButton>
         </div>

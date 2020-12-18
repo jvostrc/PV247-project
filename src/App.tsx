@@ -10,7 +10,6 @@ import CardGrid from "./components/CardGrid";
 import PkmnDetail from "./components/PkmnDetail";
 import Login from "./pages/login";
 import Wishlist from "./pages/wishlist";
-import Sets from "./pages/sets";
 import { useLoggedInUser } from "./utils/firebase";
 
 const theme = createMuiTheme({
