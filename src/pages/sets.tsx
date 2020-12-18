@@ -1,10 +1,12 @@
 import { Button, Card, CardActions, CardContent, Grid, Typography } from "@material-ui/core";
 import { FC } from "react";
-import { useLoggedInUser, wishlistCollection, myCardCollection } from "../utils/firebase";
+import { useLoggedInUser, wishlistCollection, myCardCollection, cardSetCollection } from "../utils/firebase";
 
 const Sets: FC = () => {
   const user = useLoggedInUser();
   const mockCardName = "this will be a card name"; // for mock purposes; to be deleted
+  const mockSetName = "this will be a set name"; // for mock purposes; to be deleted
+  const mockSetNumber = 42; // for mock purposes; to be deleted
 
   const submitWishlistCard = async () => {
     try {
@@ -34,6 +36,17 @@ const Sets: FC = () => {
     }
   };
 
+  const submitNewSet = async () => {
+    try {
+      await cardSetCollection.doc(user?.email ?? user?.uid).set({
+        setName: mockSetName,
+        collectedInSet: mockSetNumber
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Grid container direction="column" alignItems="center" justify="center">
       <Grid item xs={12} sm={6} md={3}>
@@ -47,6 +60,9 @@ const Sets: FC = () => {
             </Button>
             <Button onClick={submitMyCard} color="primary">
               My Cards - Test Submit
+            </Button>
+            <Button onClick={submitNewSet} color="primary">
+              New set - Test Submit
             </Button>
           </CardActions>
         </Card>

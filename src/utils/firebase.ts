@@ -42,6 +42,14 @@ const firebaseConfig = {
     })
   }
 
+  export type CardSet = {
+    setName: string;
+    collectedInSet: number;
+  }
+
+  export const cardSetCollection = db.collection('sets') as firebase.firestore.CollectionReference<CardSet>;
+
+
   export const useLoggedInUser = () => {
   const [user, setUser] = useState<firebase.User | null>();
 
