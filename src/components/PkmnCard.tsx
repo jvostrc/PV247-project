@@ -1,35 +1,30 @@
-import { Button, Card, CardActionArea, CardContent, makeStyles, Theme } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 import React, { FC } from "react";
+import { Link } from "react-router-dom";
 import { IPkmnCard } from "../types";
 
 const useStyles = makeStyles((theme: Theme) => ({
-    card: {
-        margin: "10%",
-        textAlign: "center",
-        maxWidth: 240,
-    },
-}))
+  img: {
+    maxWidth: "100%",
+    objectFit: "cover",
+    backgroundColor: theme.palette.secondary.main,
+    marginBottom: "10%",
+    borderRadius: 4
+  }
+}));
 
 type CardProps = {
-    card: IPkmnCard
-}
+  card: IPkmnCard;
+};
 
-const Set: FC<CardProps> = ({card}) => {
+const Set: FC<CardProps> = ({ card }) => {
+  const classes = useStyles();
 
-    const classes = useStyles();
-
-    return (
-        <Card className={classes.card}>
-            <CardActionArea>
-                <img alt="Not available" src={card.imageUrl}></img> 
-            </CardActionArea>
-                {/*Change to Icons hearth and star*/}
-                <CardContent>
-                    <Button color="primary">Add to My Collection</Button>
-                    <Button color="primary">Add to Wishlist</Button>
-                </CardContent>              
-        </Card>
-    );
+  return (
+    <Link to={`/${card.id}`}>
+      <img alt={card.id} src={card.imageUrl} width="240px" height="330px" className={classes.img} />
+    </Link>
+  );
 };
 
 export default Set;

@@ -12,7 +12,21 @@ export type IPkmnCard = {
   id: string;
   number: number;
   imageUrl: string;
-}
+};
+
+export type IPkmnDetail = {
+  card: {
+    id: string;
+    name: string;
+    imageUrl: string;
+    types: string[];
+    subtype: string; //Card Type
+    hp: string;
+    number: number;
+    rarity: string;
+    set: string;
+  };
+};
 
 export enum HeaderActiveItem {
   Set,
