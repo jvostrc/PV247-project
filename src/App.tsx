@@ -48,6 +48,7 @@ const theme = createMuiTheme({
 const App: FC = () => {
   const [headerActiveItem, setHeaderActiveItem] = useState<HeaderActiveItem>(HeaderActiveItem.Set);
   const isLoggedIn = useLoggedInUser();
+  const user = useLoggedInUser();
 
   return (
     <ThemeProvider theme={theme}>
@@ -89,7 +90,7 @@ const App: FC = () => {
                 }}
               />
               <Route path="/sets/:setCode" render={({ match }) => <CardGrid setCode={match.params.setCode} />} />
-              <Route path="/:cardId" render={({ match }) => <PkmnDetail id={match.params.cardId}></PkmnDetail>} />
+              <Route path="/:cardId" render={({ match }) => <PkmnDetail id={match.params.cardId} user={user}></PkmnDetail>} />
               {<>{/* <Route component={Notfound} /> */}</>}
             </Switch>
           </Container>
