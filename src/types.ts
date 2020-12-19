@@ -20,7 +20,7 @@ export type IPkmnDetail = {
     name: string;
     imageUrl: string;
     types: string[];
-    subtype: string; //Card Type
+    subtype: string;
     hp: string;
     number: number;
     rarity: string;
