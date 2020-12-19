@@ -2,14 +2,13 @@ import { Card, CardContent, Grid, Typography } from "@material-ui/core";
 import React, { FC } from "react";
 import TitleRow from "../components/TitleRow";
 
-const Wishlist: FC = () => {
+const MyCards: FC = () => {
 
-  document.title = "Wishlist";
+  document.title = "My Cards";
 
   return (
     <>
-      <TitleRow name={"Wishlist"} showBack={true}></TitleRow>
-
+      <TitleRow name={"My Cards"} showBack={true}></TitleRow>
       <Grid container>
         {/*data?.cards
           .sort((a: IPkmnCard, b: IPkmnCard) => a?.number - b?.number)
@@ -23,4 +22,4 @@ const Wishlist: FC = () => {
   );
 };
 
-export default Wishlist;
+export default MyCards;
