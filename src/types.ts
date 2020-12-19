@@ -7,6 +7,18 @@ export type IPkmnSet = {
   totalCards: number;
 };
 
+export type ISets = {
+  sets: {
+    sets: IPkmnSet[];
+  }
+}
+
+export type ICards = {
+  cards: {
+    card: IPkmnDetail[];
+  }
+}
+
 // Type of each Pokemon Card
 export type IPkmnCard = {
   id: string;

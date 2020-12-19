@@ -4,9 +4,10 @@ import { useHistory } from "react-router-dom";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import SearchIcon from "@material-ui/icons/Search";
 
-type props = {
+type Props = {
   name: string;
   showBack: boolean;
+  onChange: (value: string) => void;
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -63,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "100%",
     height: 34,
     [theme.breakpoints.up("xs")]: {
-      width: "10ch",
+      width: "12ch",
       "&:focus": {
         width: "20ch"
       }
@@ -74,7 +75,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-const TitleRow: FC<props> = ({ name, showBack }) => {
+const TitleRow: FC<Props> = ({ name, showBack, onChange }) => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -109,6 +110,7 @@ const TitleRow: FC<props> = ({ name, showBack }) => {
             input: classes.inputInput
           }}
           inputProps={{ "aria-label": "search" }}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
         />
       </div>
     </Grid>

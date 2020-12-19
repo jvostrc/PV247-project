@@ -1,8 +1,9 @@
-import { Grid } from "@material-ui/core";
+import { Grid, makeStyles, Theme } from "@material-ui/core";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { IPkmnCard } from "../types";
 import PkmnCard from "./PkmnCard";
 import TitleRow from "./TitleRow";
+import useSearchCard from "../hooks/useSearchCard";
 
 // Fetches the set cards
 const getSetCards = async (setCode: string): Promise<IPkmnCard[]> => {
@@ -10,6 +11,18 @@ const getSetCards = async (setCode: string): Promise<IPkmnCard[]> => {
   const cards = await response.json();
   return cards;
 };
+
+const useStyles = makeStyles((theme: Theme) => ({
+  container: {
+    minHeight: "calc(100vh - 156px)",
+    [theme.breakpoints.only("xs")]: {
+      minHeight: "calc(100vh - 214px)"
+    }
+  },
+  center: {
+    margin: "auto"
+  }
+}));
 
 type GridProps = {
   setCode: string;
@@ -19,6 +32,9 @@ const CardGrid: FC<GridProps> = ({ setCode }) => {
   // States to store data and for loading while cards are fetched
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>();
+  const classes = useStyles();
+
+  const { results, searchString, change, noResults } = useSearchCard(data);
 
   // Loads the set cards
   const loadData = useCallback(async () => {
@@ -42,16 +58,30 @@ const CardGrid: FC<GridProps> = ({ setCode }) => {
 
   return (
     <>
-      <TitleRow name={data?.cards[0] ? data?.cards[0].set : "Set"} showBack={true}></TitleRow>
+      <TitleRow name={data?.cards[0] ? data?.cards[0].set : "Set"} showBack={true} onChange={change}></TitleRow>
 
-      <Grid container>
-        {data?.cards
-          .sort((a: IPkmnCard, b: IPkmnCard) => a?.number - b?.number)
-          .map((item: IPkmnCard) => (
-            <Grid key={item.id} lg={3} md={4} sm={6} xs={12}>
-              <PkmnCard card={item} />
-            </Grid>
-          ))}
+      <Grid container className={classes.container}>
+        {searchString ? (
+          noResults ? (
+            <div className={classes.center}>No Results</div>
+          ) : (
+            results
+              ?.sort((a: IPkmnCard, b: IPkmnCard) => a?.number - b?.number)
+              .map((item: IPkmnCard) => (
+                <Grid key={item.id} lg={3} md={4} sm={6} xs={12}>
+                  <PkmnCard card={item} />
+                </Grid>
+              ))
+          )
+        ) : (
+          data?.cards
+            .sort((a: IPkmnCard, b: IPkmnCard) => a?.number - b?.number)
+            .map((item: IPkmnCard) => (
+              <Grid key={item.id} lg={3} md={4} sm={6} xs={12}>
+                <PkmnCard card={item} />
+              </Grid>
+            ))
+        )}
       </Grid>
     </>
   );
