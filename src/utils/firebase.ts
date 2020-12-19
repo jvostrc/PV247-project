@@ -2,6 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import { useEffect, useState } from 'react';
+import { MyCard, WishlistCard, CardSet } from '../types';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAWLOG84nIGru7qGg5flGDv8Wn0zHIgzNo",
@@ -20,23 +21,9 @@ const firebaseConfig = {
 
   type User = Pick<firebase.User, 'uid' | 'email'>;
 
-  export type WishlistCard = { // we will need to expand this in order to store wishlist card info here
-    cardId: string;
-    imageSrc: string;
-    cardNumber: number;
-    cardSet: string;
-  }
-
   export const wishlistCollection = db.collection('wishlist') as firebase.firestore.CollectionReference<WishlistCard>;
-
-  export type MyCard = { // we will need to expand this in order to store collected card info here
-    cardId: string;
-    imageSrc: string;
-    cardNumber: number;
-    cardSet: string;
-  }
-
   export const myCardCollection = db.collection('card') as firebase.firestore.CollectionReference<MyCard>;
+  export const cardSetCollection = db.collection('sets') as firebase.firestore.CollectionReference<CardSet>;
 
   export const googleLogin = () => {
     auth.signInWithPopup(googleProvider).then((res) => {
@@ -45,14 +32,6 @@ const firebaseConfig = {
       console.log(error.message)
     })
   }
-
-  export type CardSet = {
-    setName: string;
-    collectedInSet: number;
-  }
-
-  export const cardSetCollection = db.collection('sets') as firebase.firestore.CollectionReference<CardSet>;
-
 
   export const useLoggedInUser = () => {
   const [user, setUser] = useState<firebase.User | null>();

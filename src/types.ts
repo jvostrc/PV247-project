@@ -33,3 +33,22 @@ export enum HeaderActiveItem {
   MyCards,
   Wishlist
 }
+
+export type MyCard = {
+  cardId: string;
+  imageSrc: string;
+  cardNumber: number;
+  cardSet: string;
+}
+
+export type WishlistCard = {
+  cardId: string;
+  imageSrc: string;
+  cardNumber: number;
+  cardSet: string;
+}
+
+export type CardSet = {
+  setName: string;
+  collectedInSet: number;
+}
