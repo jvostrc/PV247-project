@@ -12,6 +12,9 @@ const getSets = async (): Promise<IPkmnSet[]> => {
 };
 
 const SetGrid: FC = () => {
+
+  document.title = "Sets";
+
   // States to store data and for loading while sets are fetched
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>();

@@ -11,6 +11,7 @@ import PkmnDetail from "./components/PkmnDetail";
 import Login from "./pages/login";
 import Wishlist from "./pages/wishlist";
 import { useLoggedInUser } from "./utils/firebase";
+import MyCards from "./pages/myCards";
 
 const theme = createMuiTheme({
   palette: {
@@ -69,7 +70,7 @@ const App: FC = () => {
                 path="/my-cards"
                 render={() => {
                   setHeaderActiveItem(HeaderActiveItem.MyCards);
-                  return null;
+                  return <MyCards/>;
                 }}
               />
               <Route
