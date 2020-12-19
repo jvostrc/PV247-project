@@ -137,11 +137,11 @@ const PkmnDetail: FC<DetailProps> = ({ id }) => {
           </Typography>
         </div>
         <div>
-          <IconButton color="inherit" onClick={() => (wishlisted ? removeFromWishlist() : addToWishlist())}>
-            {wishlisted ? <img src={filledStar} alt="Remove from Wishlist" width="23px" height="23px" /> : <img src={star} alt="Add to Wishlist" width="23px" height="23px" />}
-          </IconButton>
           <IconButton color="inherit" onClick={() => (collected ? removeFromMyCollection() : addToMyCollection())}>
             {collected ? <img src={filledPokeball} alt="Remove from My Cards" width="23px" height="23px" /> : <img src={pokeball} alt="Add to My Cards" width="23px" height="23px" />}
+          </IconButton>
+          <IconButton color="inherit" onClick={() => (wishlisted ? removeFromWishlist() : addToWishlist())}>
+            {wishlisted ? <img src={filledStar} alt="Remove from Wishlist" width="23px" height="23px" /> : <img src={star} alt="Add to Wishlist" width="23px" height="23px" />}
           </IconButton>
         </div>
       </Grid>

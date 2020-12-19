@@ -86,7 +86,7 @@ const useDb = () => {
   }
   
 
-  return { submitWishlistCard, removeWishlistCard, submitMyCard, removeMyCard}
+  return { submitWishlistCard, removeWishlistCard, submitMyCard, removeMyCard, myCardsCollection}
 }
 
 export default useDb;

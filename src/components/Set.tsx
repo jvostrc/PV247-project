@@ -1,8 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { Card, CardActionArea, CardContent, Typography } from "@material-ui/core";
 import { IPkmnSet } from "../types";
+import useDb from "../pages/sets";
 
 const useStyles = makeStyles((theme: Theme) => ({
   card: {
@@ -36,7 +37,20 @@ type SetProps = {
 };
 
 const Set: FC<SetProps> = ({ set }) => {
+
+  const [collected, setCollected] = useState<number>(); 
+
   const classes = useStyles();
+  const { myCardsCollection } = useDb();
+
+  useEffect(() => {
+    myCardsCollection.doc(set.name).collection("cards")
+      .get()
+      .then(response => setCollected(response.docs.length))
+      .catch(err => console.log(err.message));
+  }, []);
+
+  console.log(collected);
 
   return (
     <Link className={classes.link} to={`/sets/${set.code}`}>
@@ -51,7 +65,7 @@ const Set: FC<SetProps> = ({ set }) => {
               <b>{set.name}</b>
             </Typography>
             <Typography color="secondary" gutterBottom component="h2" variant="subtitle1">
-              0/{set.totalCards}
+              {collected}/{set.totalCards}
             </Typography>
           </CardContent>
         </CardActionArea>

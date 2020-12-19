@@ -21,7 +21,7 @@ const Set: FC<CardProps> = ({ card }) => {
   const classes = useStyles();
 
   return (
-    <Link to={`/${card.id}`}>
+    <Link to={`/cardDetail/${card.id}`}>
       <img alt={card.id} src={card.imageUrl} width="240px" height="330px" className={classes.img} />
     </Link>
   );

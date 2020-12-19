@@ -8,7 +8,7 @@ const MyCards: FC = () => {
 
   return (
     <>
-      <TitleRow name={"My Cards"} showBack={true}></TitleRow>
+      <TitleRow name={"My Cards"} showBack={false}></TitleRow>
       <Grid container>
         {/*data?.cards
           .sort((a: IPkmnCard, b: IPkmnCard) => a?.number - b?.number)

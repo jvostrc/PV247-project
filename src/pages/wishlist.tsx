@@ -8,7 +8,7 @@ const Wishlist: FC = () => {
 
   return (
     <>
-      <TitleRow name={"Wishlist"} showBack={true}></TitleRow>
+      <TitleRow name={"Wishlist"} showBack={false}></TitleRow>
 
       <Grid container>
         {/*data?.cards
