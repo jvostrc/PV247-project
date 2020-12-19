@@ -40,6 +40,8 @@ const CardGrid: FC<GridProps> = ({ setCode }) => {
     return <div>Loading...</div>;
   }
 
+  document.title = data?.cards[0] ? data?.cards[0].set : "Loading...";
+
   return (
     <>
       <TitleRow name={data?.cards[0] ? data?.cards[0].set : "Set"} showBack={true}></TitleRow>

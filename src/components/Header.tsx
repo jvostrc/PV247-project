@@ -72,7 +72,7 @@ const Header: FC<HeaderProps> = ({ active }) => {
             <Link to="/wishlist" className={`${classes.link} ${active === HeaderActiveItem.Wishlist ? classes.active : ""}`}>
               <Button className={`${classes.button} ${classes.wishlist}`}>Wishlist</Button>
             </Link>
-            <Link to="/logout" className={`${classes.link} ${classes.logoutLink}`}>
+            <Link to="/" className={`${classes.link} ${classes.logoutLink}`}>
               <Button className={`${classes.button} ${classes.logout}`} onClick={logout}>Logout</Button>
             </Link>
           </>

@@ -118,6 +118,8 @@ const PkmnDetail: FC<DetailProps> = ({ id }) => {
     return <div>Loading...</div>;
   }
 
+  document.title = data?.card ? data?.card.name : "Loading...";
+
   return (
     <Grid container item lg={8} md={8} sm={10} xs={12} className={classes.container}>
       <Grid item container direction="row" justify="space-between" alignItems="center" className={classes.marginBottom}>
