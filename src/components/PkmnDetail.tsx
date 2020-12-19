@@ -2,14 +2,13 @@ import { IconButton, makeStyles, Theme, Typography, Grid } from "@material-ui/co
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { IPkmnDetail } from "../types";
 import { useHistory } from "react-router-dom";
-
+import firebase from 'firebase/app';
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import star from "../icons/star.svg";
 import filledStar from "../icons/filled-star.svg";
 import pokeball from "../icons/pokeball.svg";
 import filledPokeball from "../icons/filled-pokeball.svg";
 import useDb from "../pages/sets";
-
 
 const getData = async (id: string): Promise<IPkmnDetail> => {
   const response = await fetch(`https://api.pokemontcg.io/v1/cards/${id}`);
@@ -18,7 +17,8 @@ const getData = async (id: string): Promise<IPkmnDetail> => {
 };
 
 type DetailProps = {
-  id: string;
+  id: string,
+  user: firebase.User | null | undefined
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-const PkmnDetail: FC<DetailProps> = ({ id }) => {
+  const PkmnDetail: FC<DetailProps> = ({ id, user }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<IPkmnDetail>();
 
@@ -70,7 +70,7 @@ const PkmnDetail: FC<DetailProps> = ({ id }) => {
 
   const classes = useStyles();
   const history = useHistory();
-  const { submitWishlistCard, removeWishlistCard, submitMyCard, removeMyCard } = useDb();
+  const { submitWishlistCard, removeWishlistCard, submitMyCard, removeMyCard, checkWishlisted, checkCollected } = useDb(user);
 
   const addToWishlist = () => {
     if (data) {
@@ -105,6 +105,8 @@ const PkmnDetail: FC<DetailProps> = ({ id }) => {
     try {
       const data = await getData(id);
       setData(data);
+      setWishlisted(await checkWishlisted(data.card.id, data.card.set));
+      setCollected(await checkCollected(data.card.id, data.card.set));
     } finally {
       setLoading(false);
     }

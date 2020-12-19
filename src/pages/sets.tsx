@@ -2,7 +2,7 @@
 import { Button, Card, CardActions, CardContent, Grid, Typography } from "@material-ui/core";
 import { FC } from "react";
 */
-import { useLoggedInUser, db } from "../utils/firebase";
+import { db } from "../utils/firebase";
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { MyCard, WishlistCard } from '../types';
@@ -36,12 +36,13 @@ const Sets: FC = () => {
 export default Sets;
 */
 
-const useDb = () => {
+const useDb = (user: firebase.User | null | undefined) => {
   
-  const user = useLoggedInUser();
-
-  const wishlistCollection = db.collection('users').doc(user?.email ?? user?.uid).collection('wishlist') as firebase.firestore.CollectionReference<WishlistCard[]>;
-  const myCardsCollection = db.collection('users').doc(user?.email ?? user?.uid).collection('my-cards') as firebase.firestore.CollectionReference<MyCard[]>;
+  
+ 
+  const wishlistCollection = db.collection('users').doc(user?.email!).collection('wishlist') as firebase.firestore.CollectionReference<WishlistCard[]>;
+  const myCardsCollection = db.collection('users').doc(user?.email!).collection('my-cards') as firebase.firestore.CollectionReference<MyCard[]>;
+  
 
   const submitWishlistCard = async (cardId: string, imageSrc: string, cardNumber: number, cardSet: string) => {
     try {
@@ -86,7 +87,18 @@ const useDb = () => {
   }
   
 
-  return { submitWishlistCard, removeWishlistCard, submitMyCard, removeMyCard, myCardsCollection}
+  const checkWishlisted = async (cardId: string, cardSet: string) => {
+      const snapshot = await wishlistCollection.doc(cardSet).collection("cards").doc(cardId).get();
+      return snapshot.exists
+     };
+
+  const checkCollected = async (cardId: string, cardSet: string) => {
+        const snapshot = await myCardsCollection.doc(cardSet).collection("cards").doc(cardId).get();
+        return snapshot.exists
+      };
+
+
+  return { submitWishlistCard, removeWishlistCard, submitMyCard, removeMyCard, checkWishlisted, checkCollected, myCardsCollection}
 }
 
 export default useDb;

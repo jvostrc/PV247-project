@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Card, CardActionArea, CardContent, Typography } from "@material-ui/core";
 import { IPkmnSet } from "../types";
 import useDb from "../pages/sets";
+import firebase from 'firebase/app';
 
 const useStyles = makeStyles((theme: Theme) => ({
   card: {
@@ -34,14 +35,15 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 type SetProps = {
   set: IPkmnSet;
+  user: firebase.User | null | undefined;
 };
 
-const Set: FC<SetProps> = ({ set }) => {
+const Set: FC<SetProps> = ({ set, user }) => {
 
   const [collected, setCollected] = useState<number>(); 
 
   const classes = useStyles();
-  const { myCardsCollection } = useDb();
+  const { myCardsCollection } = useDb(user);
 
   useEffect(() => {
     myCardsCollection.doc(set.name).collection("cards")
@@ -49,8 +51,6 @@ const Set: FC<SetProps> = ({ set }) => {
       .then(response => setCollected(response.docs.length))
       .catch(err => console.log(err.message));
   }, []);
-
-  console.log(collected);
 
   return (
     <Link className={classes.link} to={`/sets/${set.code}`}>
