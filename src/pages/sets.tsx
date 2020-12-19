@@ -2,8 +2,10 @@
 import { Button, Card, CardActions, CardContent, Grid, Typography } from "@material-ui/core";
 import { FC } from "react";
 */
-import { useLoggedInUser, wishlistCollection, myCardCollection, cardSetCollection } from "../utils/firebase";
-
+import { useLoggedInUser, db } from "../utils/firebase";
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import { MyCard, WishlistCard } from '../types';
 /*
 const Sets: FC = () => {
 
@@ -37,53 +39,52 @@ export default Sets;
 const useDb = () => {
   
   const user = useLoggedInUser();
-  const mockSetName = "this will be a set name"; // for mock purposes; to be deleted
-  const mockSetNumber = 42; // for mock purposes; to be deleted
+
+  const wishlistCollection = db.collection('users').doc(user?.uid).collection('wishlist') as firebase.firestore.CollectionReference<WishlistCard[]>;
+  const myCardsCollection = db.collection('users').doc(user?.uid).collection('my-cards') as firebase.firestore.CollectionReference<MyCard[]>;
 
   const submitWishlistCard = async (cardId: string, imageSrc: string, cardNumber: number, cardSet: string) => {
     try {
-      await wishlistCollection.doc(user?.email ?? user?.uid).set({
+      await wishlistCollection.doc(cardSet).collection("cards").doc(cardId).set({
         cardId: cardId,
         imageSrc: imageSrc,
         cardNumber: cardNumber,
         cardSet: cardSet
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
-  const removeWishlistCard = async (cardId: string) => {
-      // TODO
+  const removeWishlistCard = async (cardId: string, cardSet: string) => {
+    try {
+      await wishlistCollection.doc(cardSet).collection("cards").doc(cardId).delete();
+    } catch (error) {
+      console.error(error);
+    }
   }
   
   const submitMyCard = async (cardId: string, imageSrc: string, cardNumber: number, cardSet: string) => {
     try {
-      await myCardCollection.doc(user?.email ?? user?.uid).set({
+      await myCardsCollection.doc(cardSet).collection("cards").doc(cardId).set({
         cardId: cardId,
         imageSrc: imageSrc,
         cardNumber: cardNumber,
         cardSet: cardSet
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
-  const removeMyCard = async (cardId: string) => {
-    // TODO
+  const removeMyCard = async (cardId: string, cardSet: string) => {
+    try {
+      await myCardsCollection.doc(cardSet).collection("cards").doc(cardId).delete();
+    } catch (error) {
+      console.error(error);
+    }
   }
   
-  const submitNewSet = async () => {
-    try {
-      await cardSetCollection.doc(user?.email ?? user?.uid).set({
-        setName: mockSetName,
-        collectedInSet: mockSetNumber
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return { submitWishlistCard, removeWishlistCard, submitMyCard, removeMyCard}
 }

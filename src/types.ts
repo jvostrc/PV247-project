@@ -47,8 +47,3 @@ export type WishlistCard = {
   cardNumber: number;
   cardSet: string;
 }
-
-export type CardSet = {
-  setName: string;
-  collectedInSet: number;
-}

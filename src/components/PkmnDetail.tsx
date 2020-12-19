@@ -9,7 +9,7 @@ import filledStar from "../icons/filled-star.svg";
 import pokeball from "../icons/pokeball.svg";
 import filledPokeball from "../icons/filled-pokeball.svg";
 import useDb from "../pages/sets";
-import { cardSetCollection } from "../utils/firebase";
+
 
 const getData = async (id: string): Promise<IPkmnDetail> => {
   const response = await fetch(`https://api.pokemontcg.io/v1/cards/${id}`);
@@ -81,7 +81,7 @@ const PkmnDetail: FC<DetailProps> = ({ id }) => {
 
   const removeFromWishlist = () => {
     if (data) {
-      removeWishlistCard(data.card.id);
+      removeWishlistCard(data.card.id, data.card.set);
       setWishlisted(!wishlisted);
     }
   };
@@ -95,7 +95,7 @@ const PkmnDetail: FC<DetailProps> = ({ id }) => {
 
   const removeFromMyCollection = () => {
     if (data) {
-      removeMyCard(data.card.id);
+      removeMyCard(data.card.id, data.card.set);
       setCollected(!collected);
     }
   };
