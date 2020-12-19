@@ -40,8 +40,8 @@ const useDb = () => {
   
   const user = useLoggedInUser();
 
-  const wishlistCollection = db.collection('users').doc(user?.uid).collection('wishlist') as firebase.firestore.CollectionReference<WishlistCard[]>;
-  const myCardsCollection = db.collection('users').doc(user?.uid).collection('my-cards') as firebase.firestore.CollectionReference<MyCard[]>;
+  const wishlistCollection = db.collection('users').doc(user?.email ?? user?.uid).collection('wishlist') as firebase.firestore.CollectionReference<WishlistCard[]>;
+  const myCardsCollection = db.collection('users').doc(user?.email ?? user?.uid).collection('my-cards') as firebase.firestore.CollectionReference<MyCard[]>;
 
   const submitWishlistCard = async (cardId: string, imageSrc: string, cardNumber: number, cardSet: string) => {
     try {
