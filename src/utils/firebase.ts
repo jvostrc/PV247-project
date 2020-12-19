@@ -21,15 +21,19 @@ const firebaseConfig = {
   type User = Pick<firebase.User, 'uid' | 'email'>;
 
   export type WishlistCard = { // we will need to expand this in order to store wishlist card info here
-    owner: User;
-    cardName: string;
+    cardId: string;
+    imageSrc: string;
+    cardNumber: number;
+    cardSet: string;
   }
 
   export const wishlistCollection = db.collection('wishlist') as firebase.firestore.CollectionReference<WishlistCard>;
 
   export type MyCard = { // we will need to expand this in order to store collected card info here
-    owner: User;
-    cardName: string;
+    cardId: string;
+    imageSrc: string;
+    cardNumber: number;
+    cardSet: string;
   }
 
   export const myCardCollection = db.collection('card') as firebase.firestore.CollectionReference<MyCard>;
