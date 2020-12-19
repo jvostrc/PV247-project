@@ -73,32 +73,32 @@ const PkmnDetail: FC<DetailProps> = ({ id }) => {
   const { submitWishlistCard, removeWishlistCard, submitMyCard, removeMyCard } = useDb();
 
   const addToWishlist = () => {
-    if(data){
+    if (data) {
       submitWishlistCard(data.card.id, data.card.imageUrl, data.card.number, data.card.set);
       setWishlisted(!wishlisted);
-    } 
-  }
+    }
+  };
 
   const removeFromWishlist = () => {
-    if(data){
+    if (data) {
       removeWishlistCard(data.card.id);
       setWishlisted(!wishlisted);
     }
-  }
+  };
 
   const addToMyCollection = () => {
-    if(data){
+    if (data) {
       submitMyCard(data.card.id, data.card.imageUrl, data.card.number, data.card.set);
       setCollected(!collected);
     }
-  }
+  };
 
   const removeFromMyCollection = () => {
-    if(data){
+    if (data) {
       removeMyCard(data.card.id);
       setCollected(!collected);
     }
-  }
+  };
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -135,10 +135,10 @@ const PkmnDetail: FC<DetailProps> = ({ id }) => {
           </Typography>
         </div>
         <div>
-          <IconButton color="inherit" onClick={() => wishlisted ? removeFromWishlist() : addToWishlist()}>
+          <IconButton color="inherit" onClick={() => (wishlisted ? removeFromWishlist() : addToWishlist())}>
             {wishlisted ? <img src={filledStar} alt="Remove from Wishlist" width="23px" height="23px" /> : <img src={star} alt="Add to Wishlist" width="23px" height="23px" />}
           </IconButton>
-          <IconButton color="inherit" onClick={() => collected ? removeFromMyCollection() : addToMyCollection()}>
+          <IconButton color="inherit" onClick={() => (collected ? removeFromMyCollection() : addToMyCollection())}>
             {collected ? <img src={filledPokeball} alt="Remove from My Cards" width="23px" height="23px" /> : <img src={pokeball} alt="Add to My Cards" width="23px" height="23px" />}
           </IconButton>
         </div>

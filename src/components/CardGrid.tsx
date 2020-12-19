@@ -2,6 +2,7 @@ import { Grid } from "@material-ui/core";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { IPkmnCard } from "../types";
 import PkmnCard from "./PkmnCard";
+import TitleRow from "./TitleRow";
 
 // Fetches the set cards
 const getSetCards = async (setCode: string): Promise<IPkmnCard[]> => {
@@ -40,15 +41,19 @@ const CardGrid: FC<GridProps> = ({ setCode }) => {
   }
 
   return (
-    <Grid container>
-      {data?.cards
-        .sort((a: IPkmnCard, b: IPkmnCard) => a?.number - b?.number)
-        .map((item: IPkmnCard) => (
-          <Grid key={item.id} lg={3} md={4} sm={6} xs={12}>
-            <PkmnCard card={item} />
-          </Grid>
-        ))}
-    </Grid>
+    <>
+      <TitleRow name={data?.cards[0] ? data?.cards[0].set : "Set"} showBack={true}></TitleRow>
+
+      <Grid container>
+        {data?.cards
+          .sort((a: IPkmnCard, b: IPkmnCard) => a?.number - b?.number)
+          .map((item: IPkmnCard) => (
+            <Grid key={item.id} lg={3} md={4} sm={6} xs={12}>
+              <PkmnCard card={item} />
+            </Grid>
+          ))}
+      </Grid>
+    </>
   );
 };
 

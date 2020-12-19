@@ -7,8 +7,7 @@ import { IPkmnSet } from "../types";
 const useStyles = makeStyles((theme: Theme) => ({
   card: {
     marginRight: "5%",
-    marginTop: "5%",
-    marginBottom: "5%",
+    marginBottom: "10%",
     marginLeft: "5%",
     padding: "2%",
     textAlign: "center"
