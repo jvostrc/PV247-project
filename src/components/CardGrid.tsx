@@ -1,4 +1,4 @@
-import { Grid, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Button, Card, CardActions, CardContent, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { DbCard, IPkmnCard, Screen } from "../types";
 import PkmnCard from "./PkmnCard";
@@ -7,6 +7,8 @@ import useSearchCard from "../hooks/useSearchCard";
 import firebase from "firebase/app";
 import useDb from "../pages/sets";
 import { showError } from "../App";
+import pokeball from "../icons/filled-pokeball.svg";
+import { Link } from "react-router-dom";
 
 // Fetches the set cards
 const getSetCards = async (setCode: string): Promise<IPkmnCard[]> => {
@@ -24,6 +26,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   center: {
     margin: "auto"
+  },
+  marginClass:{
+    margin: 20,
   }
 }));
 
@@ -113,23 +118,40 @@ const CardGrid: FC<GridProps> = ({ setCode, user }) => {
       </>
     );
   } else {
-    document.title = data ? data[0]?.cardSetName : "Loading...";
+
+    document.title = (data && data[0]) ? data[0]?.cardSetName : "Empty Set";
 
     return (
       <>
-        <TitleRow name={data ? data[0].cardSetName : "Set"} showBack={false} onChange={change}></TitleRow>
+        <TitleRow name={(data && data[0]) ? data[0].cardSetName : "Empty Set"} showBack={true} onChange={change}></TitleRow>
 
-        <Grid container className={classes.container}>
-          {data
-            ? data
+        {(data && data[0]) ?
+        (<Grid container className={classes.container}>
+          {
+            data
                 .sort((a: DbCard, b: DbCard) => a?.cardNumber - b?.cardNumber)
                 .map((item: DbCard) => (
                   <Grid key={item.cardId} lg={3} md={4} sm={6} xs={12}>
                     <PkmnCard cardId={item.cardId} cardUrl={item.imageSrc} />
                   </Grid>
-                ))
-            : ""}
-        </Grid>
+                ))}
+          </Grid>)
+        : (<Grid container className={classes.container} direction="column" alignItems="center" justify="center">
+            <Grid item xs={12} sm={6} md={6}>
+              <Card>
+                <CardContent>
+                <img src={pokeball} className={classes.marginClass} width="50px"></img>
+                <Typography variant="h5" component="h1" color="secondary">
+                  You did not add any card for this set yet. 
+                </Typography>
+                <Typography variant="subtitle2" paragraph className={classes.marginClass}>
+                  <Link to="/sets"><b>Click here to return to sets, so you can add some cards.</b></Link>
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>)
+        }
       </>
     );
   }
