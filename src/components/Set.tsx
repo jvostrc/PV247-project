@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   link: {
     textDecoration: "none"
+  },
+  hide: {
+    display: "none"
   }
 }));
 
@@ -58,7 +61,7 @@ const Set: FC<SetProps> = ({ set, user, screen }) => {
   }, []);
 
   return (
-    <Link className={classes.link} to={`/${screen}/${set.code}`}>
+    <Link className={`${classes.link} ${(number || screen === "sets") ? "" : classes.hide}`} to={`/${screen}/${set.code}`}>
       <Card className={classes.card}>
         <CardActionArea>
           <CardContent>
