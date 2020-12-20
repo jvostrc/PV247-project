@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-import { Card, CardActionArea, CardContent, Typography } from "@material-ui/core";
+import { Card, CardActionArea, CardContent, Grid, Typography } from "@material-ui/core";
 import { IPkmnSet, Screen } from "../types";
 import useDb from "../hooks/useDb";
 import firebase from "firebase/app";
@@ -34,16 +34,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   link: {
     textDecoration: "none"
   },
-  hide: {
-    display: "none"
-  },
-  numbering: {
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-  },
-  numberingChildren: {
-    display: "inline-block",
-    marginLeft: 10,
+  marginRight: {
+    marginRight: theme.spacing(1)
   }
 }));
 
@@ -60,20 +52,20 @@ const Set: FC<SetProps> = ({ set, user, screen }) => {
   const { myCardsCollection, wishlistCollection } = useDb(user);
 
   useEffect(() => {
-    if(screen !== "sets"){
+    if (screen !== "sets") {
       (screen === "wishlist" ? wishlistCollection : myCardsCollection)
-      .doc(set.code)
-      .collection("cards")
-      .get()
-      .then(response => setNumber(response.docs.length))
-      .catch(error => {
-        return showError(error);
-      });
+        .doc(set.code)
+        .collection("cards")
+        .get()
+        .then(response => setNumber(response.docs.length))
+        .catch(error => {
+          return showError(error);
+        });
     }
   }, []);
 
   return (
-    <Link className={`${classes.link}`} to={`/${screen}/${set.code}`}>
+    <Link className={classes.link} to={`/${screen}/${set.code}`}>
       <Card className={classes.card}>
         <CardActionArea>
           <CardContent>
@@ -84,28 +76,27 @@ const Set: FC<SetProps> = ({ set, user, screen }) => {
             <Typography color="secondary" gutterBottom component="h1" variant="subtitle1">
               <b>{set.name}</b>
             </Typography>
-            <div className={classes.numbering}>
+            <Grid container direction="row" justify="center" alignItems="center">
               {screen === "sets" ? (
-                <Typography className={classes.numberingChildren} color="secondary" gutterBottom component="h2" variant="subtitle1">
-                 Set contains {set.totalCards} cards.
+                <Typography color="secondary" gutterBottom component="h2" variant="subtitle1">
+                  Contains {set.totalCards} cards
                 </Typography>
-              ) : (screen === "my-cards" ? (
+              ) : screen === "my-cards" ? (
                 <>
-                <Typography className={classes.numberingChildren} color="secondary" gutterBottom component="h2" variant="subtitle1">
-                  {number}/{set.totalCards}
-                </Typography>
-                <img className={classes.numberingChildren} src={pokeball} alt="logo" width="20px"/>
+                  <img src={pokeball} alt="logo" width="20px" className={classes.marginRight} />
+                  <Typography color="secondary" component="h2" variant="subtitle1">
+                    {number}/{set.totalCards}
+                  </Typography>
                 </>
               ) : (
                 <>
-                <Typography className={classes.numberingChildren} color="secondary" gutterBottom component="h2" variant="subtitle1">
-                  {number}/{set.totalCards}
-                </Typography>
-                <img className={classes.numberingChildren} src={star} alt="logo" width="20px"/>
+                  <img src={star} alt="logo" width="20px" className={classes.marginRight} />
+                  <Typography color="secondary" component="h2" variant="subtitle1">
+                    {number}/{set.totalCards}
+                  </Typography>
                 </>
-              )) 
-              }
-            </div>
+              )}
+            </Grid>
           </CardContent>
         </CardActionArea>
       </Card>
