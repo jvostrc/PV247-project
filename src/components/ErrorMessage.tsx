@@ -1,5 +1,6 @@
 import { makeStyles, Theme, createStyles, Grid, Typography } from "@material-ui/core";
 import React, { FC } from "react";
+import { unmountComponentAtNode } from "react-dom";
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
@@ -37,14 +38,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type Props = {
   message: string;
+  onClose: () => void;
 };
 
-const ErrorMessage: FC<Props> = ({ message }) => {
+const ErrorMessage: FC<Props> = ({ message, onClose }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} id="error-message">
       <Collapse in={open}>
         <Grid container direction="row" justify="space-around" alignItems="center" className={classes.container}>
           <Grid container item direction="row" alignItems="center" md={10} sm={10} xs={10}>
@@ -60,6 +62,7 @@ const ErrorMessage: FC<Props> = ({ message }) => {
               size="medium"
               onClick={() => {
                 setOpen(false);
+                onClose();
               }}
             >
               <CloseIcon fontSize="inherit" />

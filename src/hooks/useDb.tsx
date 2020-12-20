@@ -3,6 +3,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import { DbCard } from "../types";
 import ErrorMessage from "../components/ErrorMessage";
+import { deleteError } from "../App";
 
 
 const useDb = (user: firebase.User | null | undefined) => {
@@ -20,7 +21,7 @@ const useDb = (user: firebase.User | null | undefined) => {
         cardSetName: cardSetName
       });
     } catch (error) {
-      <ErrorMessage message={error} />;
+      <ErrorMessage message={error} onClose={deleteError} />;
     }
   };
 
@@ -28,7 +29,7 @@ const useDb = (user: firebase.User | null | undefined) => {
     try {
       await wishlistCollection.doc(cardSet).collection("cards").doc(cardId).delete();
     } catch (error) {
-      <ErrorMessage message={error} />;
+      <ErrorMessage message={error} onClose={deleteError} />;
     }
   };
 
@@ -43,7 +44,7 @@ const useDb = (user: firebase.User | null | undefined) => {
         cardSetName: cardSetName
       });
     } catch (error) {
-      <ErrorMessage message={error} />;
+      <ErrorMessage message={error} onClose={deleteError} />;
     }
   };
 
@@ -51,7 +52,7 @@ const useDb = (user: firebase.User | null | undefined) => {
     try {
       await myCardsCollection.doc(cardSet).collection("cards").doc(cardId).delete();
     } catch (error) {
-      <ErrorMessage message={error} />;
+      <ErrorMessage message={error} onClose={deleteError} />;
     }
   };
 

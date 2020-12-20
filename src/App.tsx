@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import Header from "./components/Header";
 import { HeaderActiveItem } from "./types";
@@ -59,7 +60,11 @@ const theme = createMuiTheme({
 });
 
 export const showError = (message: string) => {
-  return <ErrorMessage message={message} />;
+  ReactDOM.render(<ErrorMessage message={message} onClose={deleteError} />, document.getElementById("error-message-wrapper"));
+};
+
+export const deleteError = () => {
+  return document.getElementById("error-message-wrapper")?.removeChild(document.getElementById("error-message")!);
 };
 
 const App: FC = () => {
@@ -114,6 +119,7 @@ const App: FC = () => {
               <Route path="/cardDetail/:cardId" render={({ match }) => <PkmnDetail id={match.params.cardId} user={user}></PkmnDetail>} />
             </Switch>
           </Container>
+          <div id="error-message-wrapper"></div>
         </main>
       </Router>
     </ThemeProvider>
