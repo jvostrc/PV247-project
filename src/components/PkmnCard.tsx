@@ -14,15 +14,16 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 type CardProps = {
-  card: IPkmnCard;
+  cardId: string;
+  cardUrl: string;
 };
 
-const Set: FC<CardProps> = ({ card }) => {
+const Set: FC<CardProps> = ({ cardId, cardUrl }) => {
   const classes = useStyles();
 
   return (
-    <Link to={`/cardDetail/${card.id}`}>
-      <img alt={card.id} src={card.imageUrl} width="240px" height="330px" className={classes.img} />
+    <Link to={`/cardDetail/${cardId}`}>
+      <img alt={cardId} src={cardUrl} width="240px" height="330px" className={classes.img} />
     </Link>
   );
 };

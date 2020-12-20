@@ -74,28 +74,28 @@ const useStyles = makeStyles((theme: Theme) => ({
 
   const addToWishlist = () => {
     if (data) {
-      submitWishlistCard(data.card.id, data.card.imageUrl, data.card.number, data.card.set);
+      submitWishlistCard(data.card.id, data.card.imageUrl, data.card.number, data.card.setCode, data.card.set);
       setWishlisted(!wishlisted);
     }
   };
 
   const removeFromWishlist = () => {
     if (data) {
-      removeWishlistCard(data.card.id, data.card.set);
+      removeWishlistCard(data.card.id, data.card.setCode);
       setWishlisted(!wishlisted);
     }
   };
 
   const addToMyCollection = () => {
     if (data) {
-      submitMyCard(data.card.id, data.card.imageUrl, data.card.number, data.card.set);
+      submitMyCard(data.card.id, data.card.imageUrl, data.card.number, data.card.setCode, data.card.set);
       setCollected(!collected);
     }
   };
 
   const removeFromMyCollection = () => {
     if (data) {
-      removeMyCard(data.card.id, data.card.set);
+      removeMyCard(data.card.id, data.card.setCode);
       setCollected(!collected);
     }
   };
@@ -105,8 +105,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     try {
       const data = await getData(id);
       setData(data);
-      setWishlisted(await checkWishlisted(data.card.id, data.card.set));
-      setCollected(await checkCollected(data.card.id, data.card.set));
+      setWishlisted(await checkWishlisted(data.card.id, data.card.setCode));
+      setCollected(await checkCollected(data.card.id, data.card.setCode));
     } finally {
       setLoading(false);
     }

@@ -69,16 +69,18 @@ const App: FC = () => {
               />
               <Route
                 path="/my-cards"
+                exact
                 render={() => {
                   setHeaderActiveItem(HeaderActiveItem.MyCards);
-                  return <MyCards/>;
+                  return <MyCards user={user}/>;
                 }}
               />
               <Route
                 path="/wishlist"
+                exact
                 render={() => {
                   setHeaderActiveItem(HeaderActiveItem.Wishlist);
-                  return <Wishlist />;
+                  return <Wishlist user={user}/>;
                 }}
               />
               <Route
@@ -86,10 +88,12 @@ const App: FC = () => {
                 exact
                 render={() => {
                   setHeaderActiveItem(HeaderActiveItem.Set);
-                  return <SetGrid user={user}/>;
+                  return <SetGrid user={user} screen="sets"/>;
                 }}
               />
               <Route path="/sets/:setCode" render={({ match }) => <CardGrid setCode={match.params.setCode} user={user} />} />
+              <Route path="/my-cards/:setCode" render={({ match }) => <CardGrid setCode={match.params.setCode} user={user} />} />
+              <Route path="/wishlist/:setCode" render={({ match }) => <CardGrid setCode={match.params.setCode} user={user} />} />
               <Route path="/cardDetail/:cardId" render={({ match }) => <PkmnDetail id={match.params.cardId} user={user}></PkmnDetail>} />
               {<>{/* <Route component={Notfound} /> */}</>}
             </Switch>

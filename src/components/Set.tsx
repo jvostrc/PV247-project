@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { Card, CardActionArea, CardContent, Typography } from "@material-ui/core";
-import { IPkmnSet } from "../types";
+import { IPkmnSet, Screen } from "../types";
 import useDb from "../pages/sets";
 import firebase from 'firebase/app';
 
@@ -36,24 +36,26 @@ const useStyles = makeStyles((theme: Theme) => ({
 type SetProps = {
   set: IPkmnSet;
   user: firebase.User | null | undefined;
+  screen: Screen;
 };
 
-const Set: FC<SetProps> = ({ set, user }) => {
+const Set: FC<SetProps> = ({ set, user, screen }) => {
 
-  const [collected, setCollected] = useState<number>(); 
+  const [number, setNumber] = useState<number>(); 
 
   const classes = useStyles();
-  const { myCardsCollection } = useDb(user);
+  const { myCardsCollection, wishlistCollection } = useDb(user);
 
   useEffect(() => {
-    myCardsCollection.doc(set.name).collection("cards")
+    (screen === "wishlist" ? wishlistCollection : myCardsCollection)
+      .doc(set.code).collection("cards")
       .get()
-      .then(response => setCollected(response.docs.length))
+      .then(response => setNumber(response.docs.length))
       .catch(err => console.log(err.message));
   }, []);
-
+  
   return (
-    <Link className={classes.link} to={`/sets/${set.code}`}>
+    <Link className={classes.link} to={`/${screen}/${set.code}`}>
       <Card className={classes.card}>
         <CardActionArea>
           <CardContent>
@@ -65,7 +67,7 @@ const Set: FC<SetProps> = ({ set, user }) => {
               <b>{set.name}</b>
             </Typography>
             <Typography color="secondary" gutterBottom component="h2" variant="subtitle1">
-              {collected}/{set.totalCards}
+              {number}/{set.totalCards}
             </Typography>
           </CardContent>
         </CardActionArea>

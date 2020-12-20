@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { Grid, makeStyles, Theme } from "@material-ui/core";
 import Set from "./Set";
-import { IPkmnSet } from "../types";
+import { IPkmnSet, Screen } from "../types";
 import TitleRow from "./TitleRow";
 import useSearchSet from "../hooks/useSearchSet";
 import firebase from 'firebase/app';
@@ -10,7 +10,6 @@ import firebase from 'firebase/app';
 const getSets = async (): Promise<IPkmnSet[]> => {
   const response = await fetch("https://api.pokemontcg.io/v1/sets");
   const sets = await response.json();
-  console.log(sets);
   return sets;
 };
 
@@ -28,11 +27,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 type SetGridProps = {
   user: firebase.User | null | undefined;
+  screen: Screen;
 };
 
-const SetGrid: FC<SetGridProps> = ({user}) => {
+const SetGrid: FC<SetGridProps> = ({user, screen}) => {
 
-  document.title = "Sets";
+  screen === "sets" ? document.title = "Sets" : (screen === "my-cards" ? document.title = "Sets - My Cards" : document.title = "Sets - Wishlist");
 
   // States to store data and for loading while sets are fetched
   const [loading, setLoading] = useState(false);
@@ -70,14 +70,14 @@ const SetGrid: FC<SetGridProps> = ({user}) => {
           ) : (
             results?.map((item: IPkmnSet) => (
               <Grid key={item.code} item xl={3} lg={4} sm={6} xs={12}>
-                <Set set={item} user={user} />
+                <Set set={item} user={user} screen={screen} />
               </Grid>
             ))
           )
         ) : (
           data?.sets.map((item: IPkmnSet) => (
             <Grid key={item.code} item xl={3} lg={4} sm={6} xs={12}>
-              <Set set={item} user={user} />
+              <Set set={item} user={user} screen={screen} />
             </Grid>
           ))
         )}

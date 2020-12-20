@@ -1,21 +1,17 @@
-import { Card, CardContent, Grid, Typography } from "@material-ui/core";
 import React, { FC } from "react";
-import TitleRow from "../components/TitleRow";
+import SetGrid from "../components/SetGrid";
+import firebase from 'firebase/app';
 
-const MyCards: FC = () => {
+type MyCardsProps = {
+  user: firebase.User | null | undefined;
+}
+
+const MyCards: FC<MyCardsProps> = ({user}) => {
   document.title = "My Cards";
 
   return (
     <>
-      {/*<TitleRow name={"My Cards"} showBack={false}></TitleRow>*/}
-      <Grid container>
-        {/*data?.cards
-          .sort((a: IPkmnCard, b: IPkmnCard) => a?.number - b?.number)
-          .map((item: IPkmnCard) => (
-            <Grid key={item.id} lg={3} md={4} sm={6} xs={12}>
-              <PkmnCard card={item} />
-            </Grid>
-          ))*/}</Grid>
+       <SetGrid user={user} screen={"my-cards"}/>
     </>
   );
 };

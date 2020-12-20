@@ -7,6 +7,8 @@ export type IPkmnSet = {
   totalCards: number;
 };
 
+export type Screen = "wishlist" | "my-cards" | "sets";
+
 export type ISets = {
   sets: {
     sets: IPkmnSet[];
@@ -37,6 +39,7 @@ export type IPkmnDetail = {
     number: number;
     rarity: string;
     set: string;
+    setCode: string;
   };
 };
 
@@ -46,16 +49,10 @@ export enum HeaderActiveItem {
   Wishlist
 }
 
-export type MyCard = {
+export type DbCard = {
   cardId: string;
   imageSrc: string;
   cardNumber: number;
   cardSet: string;
-}
-
-export type WishlistCard = {
-  cardId: string;
-  imageSrc: string;
-  cardNumber: number;
-  cardSet: string;
+  cardSetName: string;
 }
