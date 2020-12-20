@@ -8,7 +8,7 @@ import star from "../icons/star.svg";
 import filledStar from "../icons/filled-star.svg";
 import pokeball from "../icons/pokeball.svg";
 import filledPokeball from "../icons/filled-pokeball.svg";
-import useDb from "../pages/sets";
+import useDb from "../hooks/useDb";
 
 const getData = async (id: string): Promise<IPkmnDetail> => {
   const response = await fetch(`https://api.pokemontcg.io/v1/cards/${id}`);

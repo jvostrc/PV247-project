@@ -6,7 +6,7 @@ import TitleRow from "./TitleRow";
 import useSearchCard from "../hooks/useSearchCard";
 import useSearchDb from "../hooks/useSearchDb";
 import firebase from "firebase/app";
-import useDb from "../pages/sets";
+import useDb from "../hooks/useDb";
 import { showError } from "../App";
 import pokeball from "../icons/filled-pokeball.svg";
 import { Link } from "react-router-dom";

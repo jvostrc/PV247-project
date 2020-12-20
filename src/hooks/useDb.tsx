@@ -1,42 +1,9 @@
-/*
-import { Button, Card, CardActions, CardContent, Grid, Typography } from "@material-ui/core";
-import { FC } from "react";
-*/
 import { db } from "../utils/firebase";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import { DbCard } from "../types";
 import ErrorMessage from "../components/ErrorMessage";
 
-/*
-const Sets: FC = () => {
-
-  return (
-    <Grid container direction="column" alignItems="center" justify="center">
-      <Grid item xs={12} sm={6} md={3}>
-        <Card>
-          <CardContent>
-            <Typography color="secondary">Sets view</Typography>
-          </CardContent>
-          <CardActions>
-            <Button onClick={submitWishlistCard} color="primary">
-              Wishlist - Test Submit
-            </Button>
-            <Button onClick={submitMyCard} color="primary">
-              My Cards - Test Submit
-            </Button>
-            <Button onClick={submitNewSet} color="primary">
-              New set - Test Submit
-            </Button>
-          </CardActions>
-        </Card>
-      </Grid>
-    </Grid>
-  );
-};
-
-export default Sets;
-*/
 
 const useDb = (user: firebase.User | null | undefined) => {
   const wishlistCollection = db.collection("users").doc(user?.email!).collection("wishlist") as firebase.firestore.CollectionReference<DbCard[]>;

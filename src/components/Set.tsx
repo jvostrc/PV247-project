@@ -3,7 +3,7 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { Card, CardActionArea, CardContent, Typography } from "@material-ui/core";
 import { IPkmnSet, Screen } from "../types";
-import useDb from "../pages/sets";
+import useDb from "../hooks/useDb";
 import firebase from "firebase/app";
 import { showError } from "../App";
 import pokeball from "../icons/filled-pokeball.svg";
