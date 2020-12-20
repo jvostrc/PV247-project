@@ -12,7 +12,7 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PV247_PROJECT_PCCT }}'
-          projectId: pv247-project-pcct
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PV247_PROJECT_PCTT }}'
+          projectId: pv247-project-pctt
         env:
           FIREBASE_CLI_PREVIEWS: hostingchannels

@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 import { showError } from "../App";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAWLOG84nIGru7qGg5flGDv8Wn0zHIgzNo",
-  authDomain: "pv247-project-pcct.firebaseapp.com",
-  projectId: "pv247-project-pcct",
-  storageBucket: "pv247-project-pcct.appspot.com",
-  messagingSenderId: "388644423864",
-  appId: "1:388644423864:web:2cb3501501d48f568c0c4d"
+  apiKey: "AIzaSyD5ZeFhldR21ttkQRK-egf5cAyNmMcNB90",
+  authDomain: "pv247-project-pctt.firebaseapp.com",
+  projectId: "pv247-project-pctt",
+  storageBucket: "pv247-project-pctt.appspot.com",
+  messagingSenderId: "214346369739",
+  appId: "1:214346369739:web:0dc5ca2d7d85651cb0e94e"
 };
 
 firebase.initializeApp(firebaseConfig);
