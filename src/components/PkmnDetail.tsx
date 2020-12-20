@@ -110,7 +110,7 @@ const PkmnDetail: FC<DetailProps> = ({ id, user }) => {
     } finally {
       setLoading(false);
     }
-  }, [setLoading, id, checkCollected, checkWishlisted]);
+  }, [setLoading, id]);
 
   useEffect(() => {
     loadData();
