@@ -102,7 +102,7 @@ const CardGrid: FC<GridProps> = ({ setCode, user }) => {
               results
                 ?.sort((a: IPkmnCard, b: IPkmnCard) => a?.number - b?.number)
                 .map((item: IPkmnCard) => (
-                  <Grid key={item.id} lg={3} md={4} sm={6} xs={12}>
+                  <Grid item key={item.id} lg={3} md={4} sm={6} xs={12}>
                     <PkmnCard cardId={item.id} cardUrl={item.imageUrl} />
                   </Grid>
                 ))
@@ -111,7 +111,7 @@ const CardGrid: FC<GridProps> = ({ setCode, user }) => {
             data?.cards
               .sort((a: IPkmnCard, b: IPkmnCard) => a?.number - b?.number)
               .map((item: IPkmnCard) => (
-                <Grid key={item.id} lg={3} md={4} sm={6} xs={12}>
+                <Grid item key={item.id} lg={3} md={4} sm={6} xs={12}>
                   <PkmnCard cardId={item.id} cardUrl={item.imageUrl} />
                 </Grid>
               ))
@@ -136,7 +136,7 @@ const CardGrid: FC<GridProps> = ({ setCode, user }) => {
               {resultsDb
                 ?.sort((a: DbCard, b: DbCard) => a?.cardNumber - b?.cardNumber)
                 .map((item: DbCard) => (
-                  <Grid key={item.cardId} lg={3} md={4} sm={6} xs={12}>
+                  <Grid item key={item.cardId} lg={3} md={4} sm={6} xs={12}>
                     <PkmnCard cardId={item.cardId} cardUrl={item.imageSrc} />
                   </Grid>
                 ))}
@@ -147,7 +147,7 @@ const CardGrid: FC<GridProps> = ({ setCode, user }) => {
             {data
               .sort((a: DbCard, b: DbCard) => a?.cardNumber - b?.cardNumber)
               .map((item: DbCard) => (
-                <Grid key={item.cardId} lg={3} md={4} sm={6} xs={12}>
+                <Grid item key={item.cardId} lg={3} md={4} sm={6} xs={12}>
                   <PkmnCard cardId={item.cardId} cardUrl={item.imageSrc} />
                 </Grid>
               ))}
