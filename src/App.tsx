@@ -1,8 +1,7 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import Header from "./components/Header";
-import { HeaderActiveItem } from "./types";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { Container } from "@material-ui/core";
 import "./App.css";
@@ -68,7 +67,6 @@ export const deleteError = () => {
 };
 
 const App: FC = () => {
-  const [headerActiveItem, setHeaderActiveItem] = useState<HeaderActiveItem>(HeaderActiveItem.Set);
   const isLoggedIn = useLoggedInUser();
   const user = useLoggedInUser();
 
@@ -76,9 +74,7 @@ const App: FC = () => {
     <ThemeProvider theme={theme}>
       <Router>
         <Redirect to={isLoggedIn ? "/sets" : "/"} />
-
-        <Header active={headerActiveItem} />
-
+        <Header/>
         <main className="App">
           <Container>
             <Switch>
@@ -93,7 +89,6 @@ const App: FC = () => {
                 path="/my-cards"
                 exact
                 render={() => {
-                  setHeaderActiveItem(HeaderActiveItem.MyCards);
                   return <MyCards user={user} />;
                 }}
               />
@@ -101,7 +96,6 @@ const App: FC = () => {
                 path="/wishlist"
                 exact
                 render={() => {
-                  setHeaderActiveItem(HeaderActiveItem.Wishlist);
                   return <Wishlist user={user} />;
                 }}
               />
@@ -109,7 +103,6 @@ const App: FC = () => {
                 path="/sets"
                 exact
                 render={() => {
-                  setHeaderActiveItem(HeaderActiveItem.Set);
                   return <SetGrid user={user} screen="sets" />;
                 }}
               />

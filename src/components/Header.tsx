@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { HeaderActiveItem } from "../types";
 import { AppBar, Toolbar, Button } from "@material-ui/core";
@@ -49,27 +49,24 @@ const useStyles = makeStyles((theme: Theme) => ({
   logoutLink: { marginLeft: "auto" }
 }));
 
-type HeaderProps = {
-  active: HeaderActiveItem;
-};
-
-const Header: FC<HeaderProps> = ({ active }) => {
+const Header: FC = () => {
   const classes = useStyles();
   const user = useLoggedInUser();
+  const [headerActiveItem, setHeaderActiveItem] = useState<HeaderActiveItem>(HeaderActiveItem.Set);
 
   return (
     <AppBar position="sticky" className={classes.appBar}>
       <Toolbar>
         {user && (
           <>
-            <Link to="/sets" className={`${classes.link} ${active === HeaderActiveItem.Set ? classes.active : ""}`}>
-              <Button className={`${classes.button} ${classes.sets}`}>Sets</Button>
+            <Link to="/sets" className={`${classes.link} ${headerActiveItem === HeaderActiveItem.Set ? classes.active : ""}`}>
+              <Button className={`${classes.button} ${classes.sets}`} onClick={() => setHeaderActiveItem(HeaderActiveItem.Set)}>Sets</Button>
             </Link>
-            <Link to="/my-cards" className={`${classes.link} ${active === HeaderActiveItem.MyCards ? classes.active : ""}`}>
-              <Button className={`${classes.button} ${classes.myCards}`}>My Cards</Button>
+            <Link to="/my-cards" className={`${classes.link} ${headerActiveItem === HeaderActiveItem.MyCards ? classes.active : ""}`}>
+              <Button className={`${classes.button} ${classes.myCards}`} onClick={() => setHeaderActiveItem(HeaderActiveItem.MyCards)}>My Cards</Button>
             </Link>
-            <Link to="/wishlist" className={`${classes.link} ${active === HeaderActiveItem.Wishlist ? classes.active : ""}`}>
-              <Button className={`${classes.button} ${classes.wishlist}`}>Wishlist</Button>
+            <Link to="/wishlist" className={`${classes.link} ${headerActiveItem === HeaderActiveItem.Wishlist ? classes.active : ""}`}>
+              <Button className={`${classes.button} ${classes.wishlist}`} onClick={() => setHeaderActiveItem(HeaderActiveItem.Wishlist)}>Wishlist</Button>
             </Link>
             <Link to="/" className={`${classes.link} ${classes.logoutLink}`}>
               <Button className={`${classes.button} ${classes.logout}`} onClick={logout}>
