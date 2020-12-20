@@ -12,6 +12,7 @@ import Login from "./pages/login";
 import Wishlist from "./pages/wishlist";
 import { useLoggedInUser } from "./utils/firebase";
 import MyCards from "./pages/myCards";
+import ErrorMessage from "./components/ErrorMessage";
 
 const theme = createMuiTheme({
   mixins: {
@@ -36,6 +37,10 @@ const theme = createMuiTheme({
     },
     action: {
       hover: "#212D42"
+    },
+    error: {
+      main: "#f44336",
+      light: "#FDEAEA"
     }
   },
   typography: {
@@ -52,6 +57,10 @@ const theme = createMuiTheme({
     }
   }
 });
+
+export const showError = (message: string) => {
+  return <ErrorMessage message={message} />;
+};
 
 const App: FC = () => {
   const [headerActiveItem, setHeaderActiveItem] = useState<HeaderActiveItem>(HeaderActiveItem.Set);

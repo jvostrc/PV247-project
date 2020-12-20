@@ -3,9 +3,11 @@ import { Button, Card, CardActions, CardContent, Grid, Typography } from "@mater
 import { FC } from "react";
 */
 import { db } from "../utils/firebase";
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import { DbCard } from '../types';
+import firebase from "firebase/app";
+import "firebase/firestore";
+import { DbCard } from "../types";
+import ErrorMessage from "../components/ErrorMessage";
+
 /*
 const Sets: FC = () => {
 
@@ -37,12 +39,8 @@ export default Sets;
 */
 
 const useDb = (user: firebase.User | null | undefined) => {
-  
-  
- 
-  const wishlistCollection = db.collection('users').doc(user?.email!).collection('wishlist') as firebase.firestore.CollectionReference<DbCard[]>;
-  const myCardsCollection = db.collection('users').doc(user?.email!).collection('my-cards') as firebase.firestore.CollectionReference<DbCard[]>;
-  
+  const wishlistCollection = db.collection("users").doc(user?.email!).collection("wishlist") as firebase.firestore.CollectionReference<DbCard[]>;
+  const myCardsCollection = db.collection("users").doc(user?.email!).collection("my-cards") as firebase.firestore.CollectionReference<DbCard[]>;
 
   const submitWishlistCard = async (cardId: string, imageSrc: string, cardNumber: number, cardSet: string, cardSetName: string) => {
     try {
@@ -54,7 +52,7 @@ const useDb = (user: firebase.User | null | undefined) => {
         cardSetName: cardSetName
       });
     } catch (error) {
-      console.error(error);
+      <ErrorMessage message={error} />;
     }
   };
 
@@ -62,10 +60,10 @@ const useDb = (user: firebase.User | null | undefined) => {
     try {
       await wishlistCollection.doc(cardSet).collection("cards").doc(cardId).delete();
     } catch (error) {
-      console.error(error);
+      <ErrorMessage message={error} />;
     }
-  }
-  
+  };
+
   const submitMyCard = async (cardId: string, imageSrc: string, cardNumber: number, cardSet: string, cardSetName: string) => {
     try {
       await myCardsCollection.doc(cardSet).collection("cards").doc(cardId).set({
@@ -73,10 +71,10 @@ const useDb = (user: firebase.User | null | undefined) => {
         imageSrc: imageSrc,
         cardNumber: cardNumber,
         cardSet: cardSet,
-        cardSetName: cardSetName,
+        cardSetName: cardSetName
       });
     } catch (error) {
-      console.error(error);
+      <ErrorMessage message={error} />;
     }
   };
 
@@ -84,23 +82,21 @@ const useDb = (user: firebase.User | null | undefined) => {
     try {
       await myCardsCollection.doc(cardSet).collection("cards").doc(cardId).delete();
     } catch (error) {
-      console.error(error);
+      <ErrorMessage message={error} />;
     }
-  }
-  
+  };
 
   const checkWishlisted = async (cardId: string, cardSet: string) => {
-      const snapshot = await wishlistCollection.doc(cardSet).collection("cards").doc(cardId).get();
-      return snapshot.exists
-     };
+    const snapshot = await wishlistCollection.doc(cardSet).collection("cards").doc(cardId).get();
+    return snapshot.exists;
+  };
 
   const checkCollected = async (cardId: string, cardSet: string) => {
-        const snapshot = await myCardsCollection.doc(cardSet).collection("cards").doc(cardId).get();
-        return snapshot.exists
-      };
+    const snapshot = await myCardsCollection.doc(cardSet).collection("cards").doc(cardId).get();
+    return snapshot.exists;
+  };
 
-
-  return { submitWishlistCard, removeWishlistCard, submitMyCard, removeMyCard, checkWishlisted, checkCollected, myCardsCollection, wishlistCollection}
-}
+  return { submitWishlistCard, removeWishlistCard, submitMyCard, removeMyCard, checkWishlisted, checkCollected, myCardsCollection, wishlistCollection };
+};
 
 export default useDb;

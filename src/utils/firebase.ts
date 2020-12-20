@@ -1,33 +1,33 @@
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
-import { useEffect, useState } from 'react';
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/auth";
+import { useEffect, useState } from "react";
+import { showError } from "../App";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAWLOG84nIGru7qGg5flGDv8Wn0zHIgzNo",
-    authDomain: "pv247-project-pcct.firebaseapp.com",
-    projectId: "pv247-project-pcct",
-    storageBucket: "pv247-project-pcct.appspot.com",
-    messagingSenderId: "388644423864",
-    appId: "1:388644423864:web:2cb3501501d48f568c0c4d"
-  };
+  apiKey: "AIzaSyAWLOG84nIGru7qGg5flGDv8Wn0zHIgzNo",
+  authDomain: "pv247-project-pcct.firebaseapp.com",
+  projectId: "pv247-project-pcct",
+  storageBucket: "pv247-project-pcct.appspot.com",
+  messagingSenderId: "388644423864",
+  appId: "1:388644423864:web:2cb3501501d48f568c0c4d"
+};
 
-  firebase.initializeApp(firebaseConfig);
-  export const db = firebase.firestore();
+firebase.initializeApp(firebaseConfig);
+export const db = firebase.firestore();
 
-  export const auth = firebase.auth();
-  const googleProvider = new firebase.auth.GoogleAuthProvider();
+export const auth = firebase.auth();
+const googleProvider = new firebase.auth.GoogleAuthProvider();
 
+export const googleLogin = () => {
+  auth
+    .signInWithPopup(googleProvider)
+    .catch(error => {
+      return showError(error);
+    });
+};
 
-  export const googleLogin = () => {
-    auth.signInWithPopup(googleProvider).then((res) => {
-      console.log(res.user)
-    }).catch((error) => {
-      console.log(error.message)
-    })
-  }
-
-  export const useLoggedInUser = () => {
+export const useLoggedInUser = () => {
   const [user, setUser] = useState<firebase.User | null>();
 
   useEffect(() => {
@@ -37,4 +37,4 @@ const firebaseConfig = {
   return user;
 };
 
-export const logout = () => firebase.auth().signOut(); console.log("User Signed Out!")
+export const logout = () => firebase.auth().signOut();

@@ -48,7 +48,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   img: {
     borderRadius: 4,
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
+    maxWidth: "100%",
+    objectFit: "cover"
   },
   subtitle: {
     color: "#A9AEB6"

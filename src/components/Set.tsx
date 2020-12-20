@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { Card, CardActionArea, CardContent, Typography } from "@material-ui/core";
 import { IPkmnSet, Screen } from "../types";
 import useDb from "../pages/sets";
-import firebase from 'firebase/app';
+import firebase from "firebase/app";
+import { showError } from "../App";
 
 const useStyles = makeStyles((theme: Theme) => ({
   card: {
@@ -40,20 +41,22 @@ type SetProps = {
 };
 
 const Set: FC<SetProps> = ({ set, user, screen }) => {
-
-  const [number, setNumber] = useState<number>(); 
+  const [number, setNumber] = useState<number>();
 
   const classes = useStyles();
   const { myCardsCollection, wishlistCollection } = useDb(user);
 
   useEffect(() => {
     (screen === "wishlist" ? wishlistCollection : myCardsCollection)
-      .doc(set.code).collection("cards")
+      .doc(set.code)
+      .collection("cards")
       .get()
       .then(response => setNumber(response.docs.length))
-      .catch(err => console.log(err.message));
+      .catch(error => {
+        return showError(error);
+      });
   }, []);
-  
+
   return (
     <Link className={classes.link} to={`/${screen}/${set.code}`}>
       <Card className={classes.card}>

@@ -6,6 +6,7 @@ import TitleRow from "./TitleRow";
 import useSearchCard from "../hooks/useSearchCard";
 import firebase from "firebase/app";
 import useDb from "../pages/sets";
+import { showError } from "../App";
 
 // Fetches the set cards
 const getSetCards = async (setCode: string): Promise<IPkmnCard[]> => {
@@ -59,7 +60,9 @@ const CardGrid: FC<GridProps> = ({ setCode, user }) => {
           .collection("cards")
           .get()
           .then(response => setData(response.docs.map(d => d.data())))
-          .catch(error => console.error(error));
+          .catch(error => {
+            return showError(error);
+          });
       } finally {
         setLoading(false);
       }
