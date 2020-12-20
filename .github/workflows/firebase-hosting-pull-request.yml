@@ -15,5 +15,5 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PV247_PROJECT_PCTT }}'
           projectId: pv247-project-pctt
         env:
-          CI: ""
+          CI: false
           FIREBASE_CLI_PREVIEWS: hostingchannels
