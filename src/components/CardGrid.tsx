@@ -64,7 +64,7 @@ const CardGrid: FC<GridProps> = ({ setCode, user }) => {
         setLoading(false);
       }
     }
-  }, [setLoading, setCode, myCardsCollection, screen, wishlistCollection]);
+  }, [setLoading, setCode]);
 
   // Calls the loadData() while the component is rendered
   useEffect(() => {
