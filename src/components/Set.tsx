@@ -7,7 +7,7 @@ import useDb from "../pages/sets";
 import firebase from "firebase/app";
 import { showError } from "../App";
 import pokeball from "../icons/filled-pokeball.svg";
-import star from "../icons/star.svg";
+import star from "../icons/filled-star.svg";
 
 const useStyles = makeStyles((theme: Theme) => ({
   card: {
@@ -60,7 +60,8 @@ const Set: FC<SetProps> = ({ set, user, screen }) => {
   const { myCardsCollection, wishlistCollection } = useDb(user);
 
   useEffect(() => {
-    (screen === "wishlist" ? wishlistCollection : myCardsCollection)
+    if(screen !== "sets"){
+      (screen === "wishlist" ? wishlistCollection : myCardsCollection)
       .doc(set.code)
       .collection("cards")
       .get()
@@ -68,10 +69,11 @@ const Set: FC<SetProps> = ({ set, user, screen }) => {
       .catch(error => {
         return showError(error);
       });
+    }
   }, []);
 
   return (
-    <Link className={`${classes.link} ${(number || screen === "sets") ? "" : classes.hide}`} to={`/${screen}/${set.code}`}>
+    <Link className={`${classes.link}`} to={`/${screen}/${set.code}`}>
       <Card className={classes.card}>
         <CardActionArea>
           <CardContent>
@@ -83,12 +85,26 @@ const Set: FC<SetProps> = ({ set, user, screen }) => {
               <b>{set.name}</b>
             </Typography>
             <div className={classes.numbering}>
-              <Typography className={classes.numberingChildren} color="secondary" gutterBottom component="h2" variant="subtitle1">
-                {number}/{set.totalCards}
-              </Typography>
-              {screen === "wishlist" ? (<img className={classes.numberingChildren} src={star} alt="logo" width="20px"/>) 
-              : (screen === "my-cards" ? (<img className={classes.numberingChildren} src={pokeball} alt="logo" width="20px"/>) 
-              : "")}
+              {screen === "sets" ? (
+                <Typography className={classes.numberingChildren} color="secondary" gutterBottom component="h2" variant="subtitle1">
+                 Set contains {set.totalCards} cards.
+                </Typography>
+              ) : (screen === "my-cards" ? (
+                <>
+                <Typography className={classes.numberingChildren} color="secondary" gutterBottom component="h2" variant="subtitle1">
+                  {number}/{set.totalCards}
+                </Typography>
+                <img className={classes.numberingChildren} src={pokeball} alt="logo" width="20px"/>
+                </>
+              ) : (
+                <>
+                <Typography className={classes.numberingChildren} color="secondary" gutterBottom component="h2" variant="subtitle1">
+                  {number}/{set.totalCards}
+                </Typography>
+                <img className={classes.numberingChildren} src={star} alt="logo" width="20px"/>
+                </>
+              )) 
+              }
             </div>
           </CardContent>
         </CardActionArea>
