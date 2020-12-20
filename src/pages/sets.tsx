@@ -42,10 +42,11 @@ const useDb = (user: firebase.User | null | undefined) => {
   const wishlistCollection = db.collection("users").doc(user?.email!).collection("wishlist") as firebase.firestore.CollectionReference<DbCard[]>;
   const myCardsCollection = db.collection("users").doc(user?.email!).collection("my-cards") as firebase.firestore.CollectionReference<DbCard[]>;
 
-  const submitWishlistCard = async (cardId: string, imageSrc: string, cardNumber: number, cardSet: string, cardSetName: string) => {
+  const submitWishlistCard = async (cardId: string, name: String, imageSrc: string, cardNumber: number, cardSet: string, cardSetName: string) => {
     try {
       await wishlistCollection.doc(cardSet).collection("cards").doc(cardId).set({
         cardId: cardId,
+        name: name,
         imageSrc: imageSrc,
         cardNumber: cardNumber,
         cardSet: cardSet,
@@ -64,10 +65,11 @@ const useDb = (user: firebase.User | null | undefined) => {
     }
   };
 
-  const submitMyCard = async (cardId: string, imageSrc: string, cardNumber: number, cardSet: string, cardSetName: string) => {
+  const submitMyCard = async (cardId: string, name: String, imageSrc: string, cardNumber: number, cardSet: string, cardSetName: string) => {
     try {
       await myCardsCollection.doc(cardSet).collection("cards").doc(cardId).set({
         cardId: cardId,
+        name: name,
         imageSrc: imageSrc,
         cardNumber: cardNumber,
         cardSet: cardSet,

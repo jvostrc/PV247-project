@@ -4,6 +4,7 @@ import { DbCard, IPkmnCard, Screen } from "../types";
 import PkmnCard from "./PkmnCard";
 import TitleRow from "./TitleRow";
 import useSearchCard from "../hooks/useSearchCard";
+import useSearchDb from "../hooks/useSearchDb";
 import firebase from "firebase/app";
 import useDb from "../pages/sets";
 import { showError } from "../App";
@@ -41,6 +42,7 @@ const CardGrid: FC<GridProps> = ({ setCode, user }) => {
   const screen: Screen = document.URL.includes("my-cards") ? "my-cards" : document.URL.includes("wishlist") ? "wishlist" : "sets";
 
   const { results, searchString, change, noResults } = useSearchCard(data);
+  const { resultsDb, searchStringDb, changeDb, noResultsDb } = useSearchDb(data);
   const { wishlistCollection, myCardsCollection } = useDb(user);
 
   // Loads the set cards
@@ -117,18 +119,34 @@ const CardGrid: FC<GridProps> = ({ setCode, user }) => {
 
     return (
       <>
-        <TitleRow name={data ? data[0].cardSetName : "Set"} showBack={false} onChange={change}></TitleRow>
+        <TitleRow name={data ? data[0].cardSetName : "Set"} showBack={true} onChange={changeDb}></TitleRow>
 
         <Grid container className={classes.container}>
-          {data
-            ? data
-                .sort((a: DbCard, b: DbCard) => a?.cardNumber - b?.cardNumber)
+          {searchStringDb ? (
+            noResultsDb ? (
+              <Typography variant="h2" className={classes.center}>
+                No Results
+              </Typography>
+            ) : (
+              resultsDb
+                ?.sort((a: DbCard, b: DbCard) => a?.cardNumber - b?.cardNumber)
                 .map((item: DbCard) => (
                   <Grid key={item.cardId} lg={3} md={4} sm={6} xs={12}>
                     <PkmnCard cardId={item.cardId} cardUrl={item.imageSrc} />
                   </Grid>
                 ))
-            : ""}
+            )
+          ) : data ? (
+            data
+              .sort((a: DbCard, b: DbCard) => a?.cardNumber - b?.cardNumber)
+              .map((item: DbCard) => (
+                <Grid key={item.cardId} lg={3} md={4} sm={6} xs={12}>
+                  <PkmnCard cardId={item.cardId} cardUrl={item.imageSrc} />
+                </Grid>
+              ))
+          ) : (
+            ""
+          )}
         </Grid>
       </>
     );

@@ -76,7 +76,7 @@ const PkmnDetail: FC<DetailProps> = ({ id, user }) => {
 
   const addToWishlist = () => {
     if (data) {
-      submitWishlistCard(data.card.id, data.card.imageUrl, data.card.number, data.card.setCode, data.card.set);
+      submitWishlistCard(data.card.id, data.card.name, data.card.imageUrl, data.card.number, data.card.setCode, data.card.set);
       setWishlisted(!wishlisted);
     }
   };
@@ -90,7 +90,7 @@ const PkmnDetail: FC<DetailProps> = ({ id, user }) => {
 
   const addToMyCollection = () => {
     if (data) {
-      submitMyCard(data.card.id, data.card.imageUrl, data.card.number, data.card.setCode, data.card.set);
+      submitMyCard(data.card.id, data.card.name, data.card.imageUrl, data.card.number, data.card.setCode, data.card.set);
       setCollected(!collected);
     }
   };

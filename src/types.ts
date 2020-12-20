@@ -51,6 +51,7 @@ export enum HeaderActiveItem {
 
 export type DbCard = {
   cardId: string;
+  name: String;
   imageSrc: string;
   cardNumber: number;
   cardSet: string;
