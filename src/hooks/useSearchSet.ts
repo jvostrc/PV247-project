@@ -3,7 +3,7 @@ import { IPkmnSet } from "../types";
 
 const filterData = (search: String, data: any): any => {
   const searchLower = search.toLowerCase();
-  return data?.sets.filter((item: IPkmnSet) => item.name.toLowerCase().includes(searchLower));
+  return data?.sets?.filter((item: IPkmnSet) => item.name.toLowerCase().includes(searchLower));
 };
 
 const useSearchSet = (data: any) => {
@@ -15,7 +15,7 @@ const useSearchSet = (data: any) => {
     setSearchString(value);
   }, []);
 
-  const noResults = searchString.length > 0 && results.length === 0;
+  const noResults = searchString.length > 0 && results?.length === 0;
 
   return {
     results,

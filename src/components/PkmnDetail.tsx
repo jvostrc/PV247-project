@@ -117,7 +117,7 @@ const PkmnDetail: FC<DetailProps> = ({ id, user }) => {
   }, [loadData]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Typography variant="h2">Loading...</Typography>;
   }
 
   document.title = data?.card ? data?.card.name : "Loading...";
