@@ -1,6 +1,5 @@
 import { makeStyles, Theme, createStyles, Grid, Typography } from "@material-ui/core";
 import React, { FC } from "react";
-import { unmountComponentAtNode } from "react-dom";
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";

@@ -157,7 +157,7 @@ const CardGrid: FC<GridProps> = ({ setCode, user }) => {
             <Grid item xs={12} sm={6} md={6}>
               <Card>
                 <CardContent>
-                  <img src={pokeball} className={classes.marginClass} width="50px"></img>
+                  <img src={pokeball} className={classes.marginClass} alt="" width="50px"></img>
                   <Typography variant="h5" component="h1" color="secondary">
                     You did not add any card for this set yet.
                   </Typography>
