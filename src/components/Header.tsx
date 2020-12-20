@@ -9,7 +9,6 @@ import WishlistIcon from "../icons/star.svg";
 import LogoutIcon from "../icons/logout.svg";
 import { logout, useLoggedInUser } from "../utils/firebase";
 
-
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     backgroundColor: theme.palette.secondary.main,
@@ -65,7 +64,7 @@ const Header: FC<HeaderProps> = ({ active }) => {
           <>
             <Link to="/sets" className={`${classes.link} ${active === HeaderActiveItem.Set ? classes.active : ""}`}>
               <Button className={`${classes.button} ${classes.sets}`}>Sets</Button>
-            </Link> 
+            </Link>
             <Link to="/my-cards" className={`${classes.link} ${active === HeaderActiveItem.MyCards ? classes.active : ""}`}>
               <Button className={`${classes.button} ${classes.myCards}`}>My Cards</Button>
             </Link>
@@ -73,7 +72,9 @@ const Header: FC<HeaderProps> = ({ active }) => {
               <Button className={`${classes.button} ${classes.wishlist}`}>Wishlist</Button>
             </Link>
             <Link to="/" className={`${classes.link} ${classes.logoutLink}`}>
-              <Button className={`${classes.button} ${classes.logout}`} onClick={logout}>Logout</Button>
+              <Button className={`${classes.button} ${classes.logout}`} onClick={logout}>
+                Logout
+              </Button>
             </Link>
           </>
         )}

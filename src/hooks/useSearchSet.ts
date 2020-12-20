@@ -9,7 +9,7 @@ const filterData = (search: String, data: any): any => {
 const useSearchSet = (data: any) => {
   const [searchString, setSearchString] = useState<string>("");
 
-  const results: any = useMemo(() => filterData(searchString, data), [searchString]);
+  const results: any = useMemo(() => filterData(searchString, data), [searchString, data]);
 
   const change = useCallback((value: string) => {
     setSearchString(value);

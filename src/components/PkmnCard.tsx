@@ -1,7 +1,6 @@
 import { makeStyles, Theme } from "@material-ui/core";
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
-import { IPkmnCard } from "../types";
 
 const useStyles = makeStyles((theme: Theme) => ({
   img: {

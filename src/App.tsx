@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-d
 import Header from "./components/Header";
 import { HeaderActiveItem } from "./types";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { Container, makeStyles, Theme } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import "./App.css";
 import SetGrid from "./components/SetGrid";
 import CardGrid from "./components/CardGrid";
@@ -14,6 +14,11 @@ import { useLoggedInUser } from "./utils/firebase";
 import MyCards from "./pages/myCards";
 
 const theme = createMuiTheme({
+  mixins: {
+    toolbar: {
+      minHeight: 66
+    }
+  },
   palette: {
     primary: {
       main: "#374761"
@@ -36,6 +41,9 @@ const theme = createMuiTheme({
   typography: {
     h1: {
       fontSize: "2rem"
+    },
+    h2: {
+      fontSize: "1.8rem"
     },
     button: {
       fontWeight: 400,
@@ -72,7 +80,7 @@ const App: FC = () => {
                 exact
                 render={() => {
                   setHeaderActiveItem(HeaderActiveItem.MyCards);
-                  return <MyCards user={user}/>;
+                  return <MyCards user={user} />;
                 }}
               />
               <Route
@@ -80,7 +88,7 @@ const App: FC = () => {
                 exact
                 render={() => {
                   setHeaderActiveItem(HeaderActiveItem.Wishlist);
-                  return <Wishlist user={user}/>;
+                  return <Wishlist user={user} />;
                 }}
               />
               <Route
@@ -88,14 +96,13 @@ const App: FC = () => {
                 exact
                 render={() => {
                   setHeaderActiveItem(HeaderActiveItem.Set);
-                  return <SetGrid user={user} screen="sets"/>;
+                  return <SetGrid user={user} screen="sets" />;
                 }}
               />
               <Route path="/sets/:setCode" render={({ match }) => <CardGrid setCode={match.params.setCode} user={user} />} />
               <Route path="/my-cards/:setCode" render={({ match }) => <CardGrid setCode={match.params.setCode} user={user} />} />
               <Route path="/wishlist/:setCode" render={({ match }) => <CardGrid setCode={match.params.setCode} user={user} />} />
               <Route path="/cardDetail/:cardId" render={({ match }) => <PkmnDetail id={match.params.cardId} user={user}></PkmnDetail>} />
-              {<>{/* <Route component={Notfound} /> */}</>}
             </Switch>
           </Container>
         </main>

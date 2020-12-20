@@ -1,10 +1,10 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
-import { Grid, makeStyles, Theme } from "@material-ui/core";
+import { Grid, makeStyles, Theme, Typography } from "@material-ui/core";
 import Set from "./Set";
 import { IPkmnSet, Screen } from "../types";
 import TitleRow from "./TitleRow";
 import useSearchSet from "../hooks/useSearchSet";
-import firebase from 'firebase/app';
+import firebase from "firebase/app";
 
 // Fetches the sets
 const getSets = async (): Promise<IPkmnSet[]> => {
@@ -30,9 +30,8 @@ type SetGridProps = {
   screen: Screen;
 };
 
-const SetGrid: FC<SetGridProps> = ({user, screen}) => {
-
-  screen === "sets" ? document.title = "Sets" : (screen === "my-cards" ? document.title = "Sets - My Cards" : document.title = "Sets - Wishlist");
+const SetGrid: FC<SetGridProps> = ({ user, screen }) => {
+  screen === "sets" ? (document.title = "Sets") : screen === "my-cards" ? (document.title = "Sets - My Cards") : (document.title = "Sets - Wishlist");
 
   // States to store data and for loading while sets are fetched
   const [loading, setLoading] = useState(false);
@@ -57,7 +56,7 @@ const SetGrid: FC<SetGridProps> = ({user, screen}) => {
   }, [loadData]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Typography variant="h2">Loading...</Typography>;
   }
 
   return (
@@ -66,7 +65,9 @@ const SetGrid: FC<SetGridProps> = ({user, screen}) => {
       <Grid container className={classes.container}>
         {searchString ? (
           noResults ? (
-            <div className={classes.center}>No Results</div>
+            <Typography variant="h2" className={classes.center}>
+              No Results
+            </Typography>
           ) : (
             results?.map((item: IPkmnSet) => (
               <Grid key={item.code} item xl={3} lg={4} sm={6} xs={12}>

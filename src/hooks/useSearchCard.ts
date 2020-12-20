@@ -1,5 +1,4 @@
 import { useCallback, useMemo, useState } from "react";
-import { IPkmnDetail } from "../types";
 
 const filterData = (search: String, data: any): any => {
   const searchLower = search.toLowerCase();
@@ -9,7 +8,7 @@ const filterData = (search: String, data: any): any => {
 const useSearchCard = (data: any) => {
   const [searchString, setSearchString] = useState<string>("");
 
-  const results: any = useMemo(() => filterData(searchString, data), [searchString]);
+  const results: any = useMemo(() => filterData(searchString, data), [searchString, data]);
 
   const change = useCallback((value: string) => {
     setSearchString(value);

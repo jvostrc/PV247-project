@@ -1,12 +1,11 @@
-import { Grid, makeStyles, Theme } from "@material-ui/core";
+import { Grid, makeStyles, Theme, Typography } from "@material-ui/core";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { DbCard, IPkmnCard, Screen } from "../types";
 import PkmnCard from "./PkmnCard";
 import TitleRow from "./TitleRow";
 import useSearchCard from "../hooks/useSearchCard";
-import firebase from 'firebase/app';
+import firebase from "firebase/app";
 import useDb from "../pages/sets";
-
 
 // Fetches the set cards
 const getSetCards = async (setCode: string): Promise<IPkmnCard[]> => {
@@ -29,17 +28,16 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 type GridProps = {
   setCode: string;
-  user: firebase.User | null | undefined
+  user: firebase.User | null | undefined;
 };
 
 const CardGrid: FC<GridProps> = ({ setCode, user }) => {
-
   // States to store data and for loading while cards are fetched
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>();
 
   const classes = useStyles();
-  const screen = document.URL.includes("my-cards") ? "my-cards" : (document.URL.includes("wishlist") ? "wishlist" : "sets");
+  const screen: Screen = document.URL.includes("my-cards") ? "my-cards" : document.URL.includes("wishlist") ? "wishlist" : "sets";
 
   const { results, searchString, change, noResults } = useSearchCard(data);
   const { wishlistCollection, myCardsCollection } = useDb(user);
@@ -47,7 +45,7 @@ const CardGrid: FC<GridProps> = ({ setCode, user }) => {
   // Loads the set cards
   const loadData = useCallback(async () => {
     setLoading(true);
-    if(screen === "sets"){
+    if (screen === "sets") {
       try {
         const cards = await getSetCards(setCode);
         setData(cards);
@@ -55,15 +53,18 @@ const CardGrid: FC<GridProps> = ({ setCode, user }) => {
         setLoading(false);
       }
     } else {
-      try{
+      try {
         (screen === "wishlist" ? wishlistCollection : myCardsCollection)
-        .doc(setCode).collection("cards").get().then(response => setData(response.docs.map(d => d.data())))
-        .catch(error => console.log(error));
+          .doc(setCode)
+          .collection("cards")
+          .get()
+          .then(response => setData(response.docs.map(d => d.data())))
+          .catch(error => console.error(error));
       } finally {
         setLoading(false);
-        }
-      } 
-  }, [setLoading, setCode]);
+      }
+    }
+  }, [setLoading, setCode, myCardsCollection, screen, wishlistCollection]);
 
   // Calls the loadData() while the component is rendered
   useEffect(() => {
@@ -71,7 +72,7 @@ const CardGrid: FC<GridProps> = ({ setCode, user }) => {
   }, [loadData]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Typography variant="h2">Loading...</Typography>;
   }
 
   if (screen === "sets") {
@@ -80,11 +81,13 @@ const CardGrid: FC<GridProps> = ({ setCode, user }) => {
     return (
       <>
         <TitleRow name={data?.cards[0] ? data?.cards[0].set : "Set"} showBack={true} onChange={change}></TitleRow>
-  
+
         <Grid container className={classes.container}>
           {searchString ? (
             noResults ? (
-              <div className={classes.center}>No Results</div>
+              <Typography variant="h2" className={classes.center}>
+                No Results
+              </Typography>
             ) : (
               results
                 ?.sort((a: IPkmnCard, b: IPkmnCard) => a?.number - b?.number)
@@ -107,21 +110,22 @@ const CardGrid: FC<GridProps> = ({ setCode, user }) => {
       </>
     );
   } else {
-    document.title = data ? data[0].cardSetName : "Loading...";
+    document.title = data ? data[0]?.cardSetName : "Loading...";
 
     return (
       <>
         <TitleRow name={data ? data[0].cardSetName : "Set"} showBack={false} onChange={change}></TitleRow>
-  
+
         <Grid container className={classes.container}>
-            {data ? data
-              .sort((a: DbCard, b: DbCard) => a?.cardNumber - b?.cardNumber)
-              .map((item: DbCard) => (
-                <Grid key={item.cardId} lg={3} md={4} sm={6} xs={12}>
-                  <PkmnCard cardId={item.cardId} cardUrl={item.imageSrc} />
-                </Grid>
-              )) : ""
-          }
+          {data
+            ? data
+                .sort((a: DbCard, b: DbCard) => a?.cardNumber - b?.cardNumber)
+                .map((item: DbCard) => (
+                  <Grid key={item.cardId} lg={3} md={4} sm={6} xs={12}>
+                    <PkmnCard cardId={item.cardId} cardUrl={item.imageSrc} />
+                  </Grid>
+                ))
+            : ""}
         </Grid>
       </>
     );

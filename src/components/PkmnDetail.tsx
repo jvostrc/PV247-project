@@ -2,7 +2,7 @@ import { IconButton, makeStyles, Theme, Typography, Grid } from "@material-ui/co
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { IPkmnDetail } from "../types";
 import { useHistory } from "react-router-dom";
-import firebase from 'firebase/app';
+import firebase from "firebase/app";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import star from "../icons/star.svg";
 import filledStar from "../icons/filled-star.svg";
@@ -17,8 +17,8 @@ const getData = async (id: string): Promise<IPkmnDetail> => {
 };
 
 type DetailProps = {
-  id: string,
-  user: firebase.User | null | undefined
+  id: string;
+  user: firebase.User | null | undefined;
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-  const PkmnDetail: FC<DetailProps> = ({ id, user }) => {
+const PkmnDetail: FC<DetailProps> = ({ id, user }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<IPkmnDetail>();
 
@@ -110,7 +110,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     } finally {
       setLoading(false);
     }
-  }, [setLoading, id]);
+  }, [setLoading, id, checkCollected, checkWishlisted]);
 
   useEffect(() => {
     loadData();
