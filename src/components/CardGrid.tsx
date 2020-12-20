@@ -9,7 +9,6 @@ import firebase from "firebase/app";
 import useDb from "../hooks/useDb";
 import { showError } from "../App";
 import pokeball from "../icons/filled-pokeball.svg";
-import { Link } from "react-router-dom";
 
 // Fetches the set cards
 const getSetCards = async (setCode: string): Promise<IPkmnCard[]> => {
@@ -158,13 +157,11 @@ const CardGrid: FC<GridProps> = ({ setCode, user }) => {
               <Card>
                 <CardContent>
                   <img src={pokeball} className={classes.marginClass} alt="" width="50px"></img>
-                  <Typography variant="h5" component="h1" color="secondary">
+                  <Typography variant="h5" component="h1" color="secondary" gutterBottom>
                     You did not add any card for this set yet.
                   </Typography>
-                  <Typography variant="subtitle2" paragraph className={classes.marginClass}>
-                    <Link to="/sets">
-                      <b>Click here to return to sets, so you can add some cards.</b>
-                    </Link>
+                  <Typography variant="subtitle1" color="secondary">
+                    Return to sets, so you can add some cards.
                   </Typography>
                 </CardContent>
               </Card>

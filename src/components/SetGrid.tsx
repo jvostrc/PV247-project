@@ -61,7 +61,7 @@ const SetGrid: FC<SetGridProps> = ({ user, screen }) => {
 
   return (
     <>
-      <TitleRow name={screen === "sets" ? "Sets" : (screen === "my-cards") ? "Sets - My Cards" : "Sets - Wishlist"} showBack={false} onChange={change}></TitleRow>
+      <TitleRow name={screen === "sets" ? "Sets" : screen === "my-cards" ? "Sets - My Cards" : "Sets - Wishlist"} showBack={false} onChange={change}></TitleRow>
       <Grid container className={classes.container}>
         {searchString ? (
           noResults ? (
