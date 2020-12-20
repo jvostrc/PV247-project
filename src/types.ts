@@ -57,3 +57,8 @@ export type DbCard = {
   cardSet: string;
   cardSetName: string;
 }
+
+export type SearchType = {
+  cards?: IPkmnCard[];
+  sets?: IPkmnSet[];
+}

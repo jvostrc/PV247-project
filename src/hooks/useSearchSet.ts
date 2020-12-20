@@ -1,15 +1,15 @@
 import { useCallback, useMemo, useState } from "react";
-import { IPkmnSet } from "../types";
+import { IPkmnSet, SearchType } from "../types";
 
-const filterData = (search: String, data: any): any => {
+const filterData = (search: String, data: SearchType | undefined): IPkmnSet[] | undefined => {
   const searchLower = search.toLowerCase();
   return data?.sets?.filter((item: IPkmnSet) => item.name.toLowerCase().includes(searchLower));
 };
 
-const useSearchSet = (data: any) => {
+const useSearchSet = (data: SearchType | undefined) => {
   const [searchString, setSearchString] = useState<string>("");
 
-  const results: any = useMemo(() => filterData(searchString, data), [searchString, data]);
+  const results: IPkmnSet[] | undefined = useMemo(() => filterData(searchString, data), [searchString, data]);
 
   const change = useCallback((value: string) => {
     setSearchString(value);
