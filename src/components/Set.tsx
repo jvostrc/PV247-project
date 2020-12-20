@@ -6,6 +6,8 @@ import { IPkmnSet, Screen } from "../types";
 import useDb from "../pages/sets";
 import firebase from "firebase/app";
 import { showError } from "../App";
+import pokeball from "../icons/filled-pokeball.svg";
+import star from "../icons/star.svg";
 
 const useStyles = makeStyles((theme: Theme) => ({
   card: {
@@ -34,6 +36,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   hide: {
     display: "none"
+  },
+  numbering: {
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+  },
+  numberingChildren: {
+    display: "inline-block",
+    marginLeft: 10,
   }
 }));
 
@@ -72,9 +82,14 @@ const Set: FC<SetProps> = ({ set, user, screen }) => {
             <Typography color="secondary" gutterBottom component="h1" variant="subtitle1">
               <b>{set.name}</b>
             </Typography>
-            <Typography color="secondary" gutterBottom component="h2" variant="subtitle1">
-              {number}/{set.totalCards}
-            </Typography>
+            <div className={classes.numbering}>
+              <Typography className={classes.numberingChildren} color="secondary" gutterBottom component="h2" variant="subtitle1">
+                {number}/{set.totalCards}
+              </Typography>
+              {screen === "wishlist" ? (<img className={classes.numberingChildren} src={star} alt="logo" width="20px"/>) 
+              : (screen === "my-cards" ? (<img className={classes.numberingChildren} src={pokeball} alt="logo" width="20px"/>) 
+              : "")}
+            </div>
           </CardContent>
         </CardActionArea>
       </Card>
