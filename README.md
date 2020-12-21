@@ -1,3 +1,10 @@
+# Pokémon Card Collection Tracker
+
+Aplikace pro správu Pokémon karet. Obsahuje přehled setů, jejich obsahující karty a detailní informace o jednotlivých kartách. Karty si můžete označit jako collected nebo wishlisted. Všechny posbírané karty najdete v přehledu "My Cards" a všechny chtěné karty v přehledu "Wishlisted". Registrace a login řešené přes Sign in with Google. Použité technologie: React, Typescript, Firebase. Použité API: 
+
+Pokémon card management application. It contains an overview of sets, their cards and detailed information about individual cards. You can mark the cards as collected or wishlisted. You will find all the cards you collect in the "My Cards" view and all the cards you want in the "Wishlist" view. Registration and login solved via Sign in with Google. Used technologies: React, Typescript, Firebase. Used API: https://pokemontcg.io/ 
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
